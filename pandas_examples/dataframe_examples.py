@@ -44,4 +44,11 @@ for i in range(len(dfs_s)):
 """pandas与numpy数据结构之间的转换"""
 # pandas dataframe与numpy array之间的转换
 df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})
+print(df)
+# df转换为ndarray
 print(np.array(df))
+# 读取某一列数据，两种方式均可
+print(df['A'])
+print(df.loc[:, 'A'])
+# 一列数据转换为ndarray
+print(np.array(df['A']))
