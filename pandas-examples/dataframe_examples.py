@@ -17,9 +17,9 @@ print(salaries)
 # 对dataframe按name进行分组
 group_by_name = salaries.groupby('name')
 # 获取分组后的某一组
-df1 = group_by_name.get_group('Lilei')
-print(df1)
-print(df1.describe())
+se_temp = group_by_name.get_group('Lilei')
+print(se_temp)
+print(se_temp.describe())
 # 循环各组，并将名字在给定的序列中的group添加到数组中
 config = pd.Series({'names': ['Lilei', 'BOSS']})
 dfs = []
@@ -52,3 +52,94 @@ print(df['A'])
 print(df.loc[:, 'A'])
 # 一列数据转换为ndarray
 print(np.array(df['A']))
+# Series转ndarray
+# Creating the Series
+sr = pd.Series(['New York', 'Chicago', 'Toronto', 'Lisbon', 'Rio'])
+# Create the Index
+index_ = ['City 1', 'City 2', 'City 3', 'City 4', 'City 5']
+# set the index
+sr.index = index_
+# return numpy array representation
+result = sr.as_matrix()
+# Print the result
+print("series转为ndarray：")
+print(result)
+# Print the series
+print(sr)
+
+"""读取csv等文件"""
+# 如果遇到“UnicodeDecodeError: 'utf8' codec can't decode byte....”错误，用记事本另存csv文件时，将“编码”设置为‘UTF-8’即可
+dataset = pd.read_csv('Sheet1.csv')
+print(dataset)
+# header指定某行的值作为各列的列名，1表示第二行，如果是None，则从第一行开始就是数据。
+dataset = pd.read_csv('Sheet1.csv', header=1)
+print(dataset)
+# 因为给定的数据格式，各人有各自的一套，所以具体情况具体分析。比如，这里dataset的第一列可以去掉，即得到所有数据，删除列时，用drop函数，加参数axis=1，不加则表示删除行
+dataset1 = dataset.drop(['旬平均'], axis=1)
+print(dataset1)
+
+"""专业方面，很多数据都是把年月或者年旬或者年日分别当做行和列，在计算时，需要进行处理，把时间变为一列或一行，即把几列或行的数组拼接起来
+即将[1 2;2 3]的数据变为[1 2 2 3]，pandas的concat和numpy的concatenate类似。最后把行名index统一换成日期，构成时间序列Series"""
+df = pd.DataFrame({"a": range(3), "b": range(3), "c": range(3)})
+# iloc获取的数据格式为Series
+se = df.iloc[:, 0]
+# 获取dataframe的列数：df.shape[1]
+for i in range(1, df.shape[1]):
+    print("拼接第" + str(i) + "列:")
+    se_temp = df.iloc[:, i]
+    se = pd.concat([se, se_temp])
+    print(se)
+# 把每行名称换为日期
+print("index换为日期：")
+rng = pd.date_range('2011-1-1', periods=9, freq='H')
+print(rng)
+se.index = rng
+print(se)
+
+"""几列字符串拼为一列字符串"""
+# 结构很简单: 第一列的名称.str.cat(第二列的名称)
+df = pd.DataFrame({"a": range(3), "b": range(3), "c": range(3)})
+df['a'] = df.iloc[:, 0].apply(str) + "-" + df['b'].apply(str) + "-" + df['b'].apply(str)
+# 拼接之后，只留下特定的几列
+df = df[['a', 'c']]
+print(df)
+
+# 取出某列的第几行
+print(df['a'][0])
+# df行数
+print(df.shape[0])
+
+"""多个Series拼接"""
+a = pd.Series([1, 2])
+rng1 = pd.date_range('2011-1-1', periods=2, freq='D')
+a.index = rng1
+b = pd.Series([2, 3, 4])
+rng2 = pd.date_range('2011-1-2', periods=3, freq='D')
+b.index = rng2
+c = pd.Series([5, 6])
+rng3 = pd.date_range('2011-1-1', periods=2, freq='D')
+c.index = rng3
+series1 = pd.concat([a, b], axis=1)
+print(series1)
+series2 = pd.concat([series1, c], axis=1)
+print(series2)
+
+"""重新命名各列"""
+new_col = ['new1', 'new2', 'new3']
+series2.columns = new_col
+print(series2)
+
+"""交换列的位置"""
+order = ['new2', 'new1', 'new3']
+series2 = series2[order]
+print(series2)
+
+"""取dataframe指定多行列 slice操作"""
+# 取多行
+print(series2.iloc[0:2])
+# 取多列
+print(series2.iloc[:, 0:2])
+# 取多行多列
+print(series2.iloc[0:2, 0:2])
+# 行用数字取，列用名字取
+print(series2.iloc[0:2]['new1'])
