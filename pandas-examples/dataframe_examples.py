@@ -89,11 +89,15 @@ for i in range(1, df.shape[1]):
     se_temp = df.iloc[:, i]
     se = pd.concat([se, se_temp])
     print(se)
+# 如果一开始没有给series起名，比如从csv读取出来时是dataframe，拼接之后没办法再给Series起名，但是又需要给它起名，那么只能采取重新构造一个series的方式来命名
+se = pd.Series(se, name="aaaaaaa")
+print(se)
 # 把每行名称换为日期
 print("index换为日期：")
 rng = pd.date_range('2011-1-1', periods=9, freq='H')
 print(rng)
 se.index = rng
+se = pd.Series(se, name="bbbbb")
 print(se)
 
 """几列字符串拼为一列字符串"""
@@ -110,9 +114,11 @@ print(df['a'][0])
 print(df.shape[0])
 
 """多个Series拼接"""
-a = pd.Series([1, 2])
+# 初始化的时候不起名，后面rename没有用
+a = pd.Series([1, 2], name='aa')
 rng1 = pd.date_range('2011-1-1', periods=2, freq='D')
 a.index = rng1
+print(a)
 b = pd.Series([2, 3, 4])
 rng2 = pd.date_range('2011-1-2', periods=3, freq='D')
 b.index = rng2
@@ -120,26 +126,34 @@ c = pd.Series([5, 6])
 rng3 = pd.date_range('2011-1-1', periods=2, freq='D')
 c.index = rng3
 series1 = pd.concat([a, b], axis=1)
+# 拼接时，给各列取名
 print(series1)
-series2 = pd.concat([series1, c], axis=1)
-print(series2)
+df2 = pd.concat([series1, c], axis=1)
+print(df2)
 
 """重新命名各列"""
 new_col = ['new1', 'new2', 'new3']
-series2.columns = new_col
-print(series2)
+df2.columns = new_col
+print(df2)
 
 """交换列的位置"""
 order = ['new2', 'new1', 'new3']
-series2 = series2[order]
-print(series2)
+df2 = df2[order]
+print(df2)
 
 """取dataframe指定多行列 slice操作"""
 # 取多行
-print(series2.iloc[0:2])
+print(df2.iloc[0:2])
 # 取多列
-print(series2.iloc[:, 0:2])
+print(df2.iloc[:, 0:2])
 # 取多行多列
-print(series2.iloc[0:2, 0:2])
+print(df2.iloc[0:2, 0:2])
 # 行用数字取，列用名字取
-print(series2.iloc[0:2]['new1'])
+print(df2.iloc[0:2]['new1'])
+
+"""按日期取值并处理"""
+print(df2)
+print(type(df2.index))
+print('---------获取2011年前两天的数据-----------')
+# 获取某段日期内的数据
+print(df2['2011-01-01':'2011-01-02'])
