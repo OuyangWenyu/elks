@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from matplotlib import pyplot
 
 """对dataframe进行分组的例子"""
 salaries = pd.DataFrame({
@@ -157,3 +158,20 @@ print(type(df2.index))
 print('---------获取2011年前两天的数据-----------')
 # 获取某段日期内的数据
 print(df2['2011-01-01':'2011-01-02'])
+
+"""给Series作slice操作"""
+arr = [1, 2, 3, 4]  # 创建数组
+series_1 = pd.Series(arr)
+series_1.index = ['a', 'b', 'c', 'd']
+print("------------------Series查询操作----------------------")
+print(series_1['a'])
+print(series_1[['a', 'b']])
+print(series_1[series_1 > 2])
+print(series_1[:2])
+print(series_1['a':'c'])
+
+"""给Series作折线图"""
+ts = pd.Series(np.random.randn(1000), index=pd.date_range('1/1/2000', periods=1000))
+print(ts)
+pyplot.plot(ts.index, ts.values, color='red', label='testing accuracy')
+pyplot.show()
