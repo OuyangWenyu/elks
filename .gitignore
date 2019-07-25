@@ -930,3 +930,7 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 /bayesian-optimization-example/logs.json
+/keras-examples/model.h5
+/keras-examples/model.json
+/keras-examples/model.yaml
+/keras-examples/*.hdf5

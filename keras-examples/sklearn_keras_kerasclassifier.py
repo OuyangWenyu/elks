@@ -43,6 +43,7 @@ Y = dataset[:, 8]
 # create model
 model = KerasClassifier(build_fn=create_model, nb_epoch=150, batch_size=10)
 # evaluate using 10-fold cross validation
+# TODO： 这个StratifiedKFold已经废弃了，所以参考 from sklearn.model_selection import StratifiedKFold
 kfold = StratifiedKFold(y=Y, n_folds=10, shuffle=True, random_state=seed)
 results = cross_val_score(model, X, Y, cv=kfold)
 print(results.mean())
