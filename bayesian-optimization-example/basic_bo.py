@@ -32,10 +32,13 @@ optimizer.maximize(
 )
 
 print(optimizer.max)
+print("-----------------------------输出各次迭代的结果------------------------------")
 
 for i, res in enumerate(optimizer.res):
     print("Iteration {}: \n\t{}".format(i, res))
 
+print("---------------------------------寻优过程中改变寻优边界-------------------------------------")
+# 可以在寻优计算过程中改变寻优边界
 optimizer.set_bounds(new_bounds={"x": (-2, 3)})
 
 optimizer.maximize(
@@ -43,20 +46,31 @@ optimizer.maximize(
     n_iter=5,
 )
 
+print("---------------------------------寻优过程中探索特定参数值-------------------------------------")
+# 指定要探索的参数值，lazy表示下面maximize时执行
 optimizer.probe(
     params={"x": 0.5, "y": 0.7},
     lazy=True,
 )
 
+print(optimizer.space.keys)
+
+optimizer.probe(
+    params=[-0.3, 0.1],
+    lazy=True,
+)
 optimizer.maximize(init_points=0, n_iter=0)
 
+print("---------------------------------存储与加载寻优过程记录-------------------------------------")
+# 用JSONLogger存储、加载计算过程
 logger = JSONLogger(path="./logs.json")
 optimizer.subscribe(Events.OPTMIZATION_STEP, logger)
+# Results will be saved in ./logs.json
 optimizer.maximize(
     init_points=2,
     n_iter=3,
 )
-
+print("--------------------加载之前存储在./logs.json中的计算过程------------------------")
 new_optimizer = BayesianOptimization(
     f=black_box_function,
     pbounds={"x": (-2, 2), "y": (-2, 2)},
