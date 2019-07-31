@@ -17,4 +17,30 @@ x = np.array([[1., -1., 2.],
 x_scale = preprocessing.scale(x)
 print(x_scale)
 
-"""交叉验证"""
+"""交叉验证KFold与StratifiedKFold是有区别的"""
+from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import KFold
+
+# KFold交叉采样：将训练/测试数据集划分n_splits个互斥子集，每次只用其中一个子集当做测试集，剩下的（n_splits-1）作为训练集，进行n_splits次实验并得到n_splits个结果。
+# StratifiedKFold分层采样，用于交叉验证：与KFold最大的差异在于，StratifiedKFold方法是根据标签中不同类别占比来进行拆分数据的。
+# X = np.array([[1, 2], [3, 4], [5, 6], [7, 8]])
+# X = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16]])
+X = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]], [[9, 10], [11, 12]], [[13, 14], [15, 16]]])
+# y = np.array([0, 1, 2, 3, 4, 5, 6, 7])
+# y = np.array([0, 0, 1, 1])
+y = np.array([0, 1, 2, 3])
+
+# skf = StratifiedKFold(n_splits=2)
+# n_splits是交叉验证分的个数，也是每个子集包含多少个元素的计算依据
+skf = KFold(n_splits=3)
+print(skf.get_n_splits(X, y))
+print(skf)
+# 交叉验证的X、y的维度需要注意，X：array-like, shape (n_samples, n_features)，当X维度较高时，split操作对应的是最外层的两个维度
+for train_index, test_index in skf.split(X, y):
+    print("TRAIN:", train_index, "TEST:", test_index)
+    X_train, X_test = X[train_index], X[test_index]
+    y_train, y_test = y[train_index], y[test_index]
+    print("X训练集：", X_train)
+    print("X测试集：", X_test)
+    print("y训练集：", y_train)
+    print("y测试集：", y_test)
