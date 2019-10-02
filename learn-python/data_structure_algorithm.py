@@ -31,3 +31,9 @@ period_num_1d = 24
 kss_period = (1 - (1 - (kss + kg)) ** (1 / period_num_1d)) / (1 + kg / kss)
 print(type(kss_period))
 print(kss_period)
+
+# 基本数学运算符中，整除符号是//
+a = 10
+b = 5
+c = a // b
+print("c 的值为：", c)

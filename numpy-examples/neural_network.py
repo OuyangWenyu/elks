@@ -1,5 +1,10 @@
 """用numpy手写神经网络"""
 import numpy as np
+import os
+from sklearn.datasets import make_moons
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+from matplotlib import cm
 
 # 首先是标定神经网络的结构
 NN_ARCHITECTURE = [{"input_dim": 2, "output_dim": 25, "activation": "relu"},
@@ -137,7 +142,7 @@ def full_backward_propagation(Y_hat, Y, memory, params_values, nn_architecture):
 
         grads_values['dW'+str(layer_idx_curr)] = dW_curr
         grads_values['db'+str(layer_idx_curr)] = db_curr
-        return grads_values
+    return grads_values
 
 
 def update(params_values, grads_values, nn_architecture, learning_rate):
@@ -195,7 +200,45 @@ def train(X, Y, nn_architecture, epochs, learning_rate, verbose=False, callback=
                 callback(i, param_values)
     return param_values
 
+
 # number of samples in the data set
 N_SAMPLES = 1000
 # ratio between training and test sets
 TEST_SIZE = 0.1
+X, y = make_moons(n_samples=N_SAMPLES, noise=0.2, random_state=100)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=TEST_SIZE, random_state=42)
+
+
+def make_plot(X, y, plot_name, file_name=None, XX=None, YY=None, preds=None, dark=False):
+    """可视化数据集的函数"""
+    plt.figure(figsize=(16, 12))
+    axes = plt.gca()
+    axes.set(xlabel="$X_1$", ylabel="$X_2$")
+    plt.title(plot_name, fontsize=30)
+    plt.subplots_adjust(left=0.20)
+    plt.subplots_adjust(right=0.80)
+    if(XX is not None and YY is not None and preds is not None):
+        plt.contourf(XX, YY, preds.reshape(XX.shape),
+                     25, alpha=1, cmap=cm.Spectral)
+        plt.contourf(XX, YY, preds.reshape(XX.shape),
+                     levels=[.5], cmap="Greys", vmin=0, vmax=.6)
+    plt.scatter(X[:, 0], X[:, 1], c=y.ravel(), s=40,
+                cmap=plt.cm.Spectral, edgecolors='black')
+    plt.show()
+    if(file_name):
+        plt.savefig(file_name)
+        plt.close()
+
+
+make_plot(X, y, "Dataset")
+# Training
+params_values = train(np.transpose(X_train), np.transpose(
+    y_train.reshape((y_train.shape[0], 1))), NN_ARCHITECTURE, 10000, 0.01)
+# Prediction
+Y_test_hat, _ = full_forward_propagation(
+    np.transpose(X_test), params_values, NN_ARCHITECTURE)
+# Accuracy achieved on the test set
+acc_test = get_accuracy_value(Y_test_hat, np.transpose(
+    y_test.reshape((y_test.shape[0], 1))))
+print("Test set accuracy: {:.2f} - David".format(acc_test))

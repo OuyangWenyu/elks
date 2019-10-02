@@ -1,5 +1,6 @@
+from functools import reduce
 import numpy as np
-
+# ------------------------------常用计算函数示例--------------------------------------------
 # 卷积运算
 print("----------------------------卷积运算---------------------------")
 print(np.convolve([1, 2, 3], [0, 1, 0.5]))
@@ -56,3 +57,35 @@ print((a == b).all(axis=0).mean())
 c = b.copy()
 c[0] = 0
 print((b == c).all(axis=0).mean())
+
+
+# ------------------取交集函数---------------------------
+lst1 = [1, 3, 4, 3]
+lst2 = [3, 1, 2, 1]
+print(np.intersect1d(lst1, lst2))
+# 多个集合取交集
+print(reduce(np.intersect1d, ([1, 3, 4, 3], [3, 1, 2, 1], [6, 3, 4, 2])))
+# 返回两个交集相交的元素的index
+C, ind1, ind2 = np.intersect1d(lst1, lst2, return_indices=True)
+print(C)
+print(ind1)
+print(ind2)
+
+
+# ---------------------where函数-------------------------------------------
+aa = np.arange(10)
+# np.where(condition, x, y)：满足条件(condition)，输出x，不满足输出y。
+print(np.where(aa, 1, -1))
+print(np.where(aa > 5, 1, -1))
+# np.where(condition)：只有条件 (condition)，没有x和y，则输出满足条件 (即非0) 元素的坐标
+a = np.array([2, 4, 6, 8, 10])
+print(np.where(a > 5))
+
+
+# ------------------------argmax函数--------------------------------------------
+# 假定现在有一个数组a = [3, 1, 2, 4, 6, 1]现在要算数组a中最大数的索引是多少？argmax解决的就是这类问题
+a = np.array([[1, 5, 5, 2],
+              [9, 6, 2, 8],
+              [3, 7, 9, 1]])
+print(np.argmax(a, axis=0))
+print(np.argmax(a, axis=1))
