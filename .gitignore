@@ -935,4 +935,3 @@ buildNumber.properties
 /keras-examples/model.yaml
 /keras-examples/*.hdf5
 /.vscode/
-/pytorch-examples/large_files/
