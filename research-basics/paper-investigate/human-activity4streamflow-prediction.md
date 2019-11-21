@@ -389,7 +389,7 @@ table2总结了**WRM需要的变量以及数据源**，也copy一遍。
 
 |名称|发射和服役时间|空间分辨率|时间分辨率|
 |-|-|-|-|
-|**Precipitation**|-|-|-|
+|**Precipitation**||||
 |TMPA|2000-2018|0.25° 60°S to 60°N|3h|
 |PERSIANN|2000-|0.25° 60°S to 60°N|1h
 |CMORPH|2002-|0.07° 60°S to 60°N|30min|
@@ -425,7 +425,22 @@ table2总结了**WRM需要的变量以及数据源**，也copy一遍。
 |Landsat(surface water height)|2013(Landsat-8),2022(Landsat-9)|30(multisoectral)-100m(thermal)|16d|
 |MODIS(surface water height)|2000-|500m|Daily|
 |Sentinel-2(surface water height)|2015/2017|10-60m|5/10d|
+|**Snow**||||
+|MODIS SCE|2000-|500m, 0.05°|daily and 8d composite|
+|VIIRS SCE|2012-|375m(swath),500m|daily and 8d composite|
+|AMSR-E SWE|2000-2011|25km|daily, 5d, monthly|
+|**Groundwater**||||
+|GRACE|2002|500000km$^2$|30d|
+|GRACE FO|2017|500000km$^2$|30d|
+|**Vegetation**||||
+|Landsat|2013(Landsat-8),2022(Landsat-9)|15m|16d|
+|AVHRR/GIMMS|1979-2015|1km|7/14d composites|
+|MODIS|2000|250m, 1km, 0.05°|16d,mongthly|
+|VIIRS|2012|375m(swath),500m|daily and 8d composite|
+|SPOT/PROBA-V|1990-2017|1km|10d|
+|Sentinel-2|2015/2017|10-60m|5/10d|
 
+剩下的先不管了，直接先试下GAGES-II里面流域的水库密度和水库库容等属性，把代码跑一下。
 ## Quanfying
 
 这篇luweiwei学姐的文章，看看中小水库对径流影响的分析都注重了哪些因素。
