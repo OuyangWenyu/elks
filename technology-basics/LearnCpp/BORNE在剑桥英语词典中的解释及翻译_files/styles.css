@@ -1,0 +1,250 @@
+@charset "UTF-8";
+
+body{
+	vertical-align:baseline;
+	border:0;
+	outline:0;
+	padding:0;
+	margin:0;
+}
+
+#container_dc {
+	position:absolute;
+	width:300px;
+	height:250px;
+	border:1px #555859 solid;
+	top:0;
+	left:0;
+	margin:auto;
+	opacity:0;
+  	background-color:#ffffff;
+  	
+  	box-sizing: border-box;
+  	-moz-box-sizing: border-box;
+  	-webkit-box-sizing: border-box;
+
+  	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+
+	/* Rules below not implemented in browsers yet */
+	-o-user-select: none;
+	user-select: none;
+}
+
+#content_dc {
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	overflow:hidden;
+}
+
+#btn_cta1 {
+	position:absolute;
+	display:none;
+	width:120px;
+	height:50px;
+	left:0;
+	top:528px;
+	opacity:0;
+	z-index:50;
+	background-color:#572b79;
+	cursor:pointer;
+}
+
+#bg1, #bg2, #bg3,#bg4 {
+	position:absolute;
+	display:block;
+	width:100%;
+	height:100%;
+	left:0;
+	top:0;
+	z-index:0;
+}
+.bg{
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    opacity: 1;
+}     
+#bg2{
+    z-index: 2;
+    opacity: 0;
+}
+
+#bg4{
+    z-index: 0;
+}
+#bg5{
+    z-index: 1;
+}
+/* ======= ANIMATED ELEMENTS ======================
+===================================================*/
+
+
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
+#footer {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 63px;
+    bottom: 0px;
+}
+
+#logo {
+    display: block; 
+    position: absolute; 
+    top: 7px;
+    left: 30px;
+    width: 83px;
+    height: 41px;
+    opacity: 0;
+}
+#logo-large {
+    display: block; 
+    position: absolute; 
+    top: 30px;
+    left: 37px;
+    width: 227px;
+    height: 111px;
+}
+
+#cta {
+    display: block;
+    position: absolute;
+    width: 81px;
+    height: 27px;
+    left: 111px;
+    top: 192px;
+    z-index: 2;
+}
+.cta{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#copy1, #copy2, #copy3 {
+    display: block;
+    position: absolute;
+    width: 300px;
+    height: 250px;
+    top: 0px;
+    left: 0px;
+}
+
+.copy {
+    display: block; position: absolute; height: 72px;
+}
+
+#flower1 {
+    display: block;
+    position: absolute;
+    width: 36px;
+    top: 78px;
+    left: 239px;
+    z-index: 10;
+}
+#flower2 {
+    display: block;
+    position: absolute;
+    width: 33px;
+    top: 83px;
+    left: 172px;
+    z-index: 10;
+}
+#flower3 {
+    display: block;
+    position: absolute;
+    width: 33px;
+    top: 68px;
+    left: 96px;
+    z-index: 10;
+}
+#flower4 {
+    display: block;
+    position: absolute;
+    width: 33px;
+    top: 48px;
+    left: 39px;
+    z-index: 10;
+}
+
+#btn_bg1 {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 50;
+}
+
+#cta-arrow {
+    position: absolute; display: block; top:0; left: 0;
+}
+
+#bg-container {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+
+#rect1 {
+    width: 100%;
+    height: 100%;
+    opacity: .85;
+}
+
+#f1_c1, #f1_c2, #f2_c1, #f2_c2, #f3_c1, #f3_c2 {
+    position: absolute;
+    top: 0px; left: 0px;
+    width: 100%; height: auto;
+    opacity: 0;
+}
+
+#center {
+    display: block; position: absolute; bottom: 0px; left: 0px;
+    width: 100%; height: 66px;
+    
+}
+
+#frame3 {
+    display: block; position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;
+    opacity: 0; z-index: 5;
+}
+
+#f3_rect {
+    position: absolute; width: 100%; height: auto;
+}
+
+#frame4 {
+    display: block; position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;
+    opacity: 0; z-index: 6;
+}
+
+#buynow {
+    position: absolute; width: 100%; height: 100%; top: 0px; left: 0px;
+}
+
+#f4_c1 {
+    position: absolute; width: 222px; height: 23px; z-index: 3;
+    top: 152px; left: 39px;
+}
+
+#legal {
+    position: absolute; width: 80px; height: 6px; z-index: 4; left: 215px; top: 4px;
+}

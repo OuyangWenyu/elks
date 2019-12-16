@@ -1,0 +1,21 @@
+
+var ftGUID_3828608="432477C520F028";
+var ftConfID_3828608="18912160";
+var ftParams_3828608="ftx=&fty=&ftadz=&ftscw=&ft_custom=248178396&ftOBA=1&ft_ifb=1&ft_domain=dictionary.cambridge.org&ft_agentEnv=0&ft_referrer=https%3A%2F%2Fdictionary.cambridge.org%2F&cachebuster=314870.05515047215";
+var ftKeyword_3828608="";
+var ftCustom_3828608="248178396";
+var ftSection_3828608="";
+var ftSegment_3828608="x2d,yo5,w2c,xtx,vno,vno21176_0";
+var ftSegmentList_3828608=[{m:'c12345_XM_SUB_NONSUB',s:'x2d'},{s:'yo5'},{s:'w2c'},{s:'xtx'},{s:'vno'},{m:'mcppv',s:'vno21176_0',t:43490000}];
+var ftRuleMatch_3828608="0";
+var ftTimestamp_3828608="1576134776";
+var ftImp3828608 = {};
+ftImp3828608.privacy = "x";
+ftImp3828608.guidAge = "39";
+ftImp3828608.impID = "F180F90F-4710-A329-1314-4CA7832ED4B0";
+ftImp3828608.duid = "FT:432477C520F028";
+
+ftImp3828608.ft_tpplid = "";
+ftImp3828608.ft_c = {};
+
+document.write('<scr'+'ipt src="https://cdn.flashtalking.com/xre/382/3828608/2671441/js/j-3828608-2671441.js" id="ftscript_m3828608" name="ftscript_m3828608"></scr'+'ipt>');
