@@ -1,6 +1,6 @@
 # Bash基本操作
 
-主要参考[bash-guide](https://github.com/Idnan/bash-guide)。简单了解一下常用的bash命令，方便日常科研使用。
+主要参考[bash-guide](https://github.com/Idnan/bash-guide)。简单汇总记录一些常用的bash命令，方便日常科研使用。关于linux一些基本知识，在本文件夹的其他文件里会有介绍。
 
 首先简单介绍下bash，然后记录常用命令。
 
