@@ -174,3 +174,63 @@ sudo chown -R fayer share/
 
 接下来一个场景：要在某台主机上共享一些文件给我实验室的人，但这台主机上还有其他非实验室的人在使用，我只想让实验室的人查看和修改这些文件，其他人不行。管理员要有root权限。详情参考原文。
 
+## 用户权限下的操作实践
+
+如果之前一直都是管理员下使用Ubuntu，刚刚转到用户角色，可能会有些不习惯，这里记录一些日常实践。
+
+### 安装软件
+
+比较方便好用的连接linux服务器的工具推荐：[mobaxterm](https://mobaxterm.mobatek.net/)。
+
+首先看看如何安装python，这里以anaconda的安装为例，直接使用如下命令即可：
+
+```Shell
+$ cd /home/wvo5024
+$ curl -O https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
+$ bash  Anaconda3-2019.10-Linux-x86_64.sh
+Anaconda3 will now be installed into this location:
+/home/wvo5024/anaconda3
+...
+installation finished.
+Do you wish the installer to prepend the Anaconda3 install location
+to PATH in your /home/wvo5024 /.bashrc ? [yes|no] yes
+$ source ~/.bashrc
+$ python  --version
+```
+
+注意环境变量配置到用户文件里。
+
+如果不在suders file名单里，那么就不能使用sudo命令来安装package，不过可以下载.sh包，然后执行bash命令来安装。
+
+安装一个软件，比如anaconda，然后环境配置默认在用户文件夹下，进入配置文件下的环境需要执行下述语句：
+
+```Shell
+. ~/.bashrc
+```
+
+这样，就可以使用配置环境下的相关软件了，比如python,pip等。
+
+安装IDE，还是推荐pycharm，首先可以在本地下载安装包，这里使用这个链接: https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=linux 下载的，然后再使用mobaxterm的upload上传到服务器文件夹中。
+
+然后解压文件：
+
+```Shell
+tar -xzf pycharm-professional-2019.3.1.tar.gz
+```
+
+使用tar -xzf pycharm-professional-2019.3.1.tar.gz -C <指定文件夹> 可以解压到指定文件夹下，当然也可以解压后再移动到指定文件夹下，比如：
+
+```Shell
+mv pycharm-2019.3.1 ../programs/pycharm-2019.3.1
+```
+
+然后可以进入文件夹打开软件了：
+
+```Shell
+cd ../programs/pycharm-2019.3.1
+cd bin
+sh pycharm.sh
+```
+
+这时候稍等一会儿，会弹出pycharm的界面。可以一直默认。然后如果是专业版，需要激活，可以使用学生账号来激活，这是免费的。激活后就可以使用了。
+
