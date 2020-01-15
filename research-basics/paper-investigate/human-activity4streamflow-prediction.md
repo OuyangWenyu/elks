@@ -441,6 +441,7 @@ table2总结了**WRM需要的变量以及数据源**，也copy一遍。
 |Sentinel-2|2015/2017|10-60m|5/10d|
 
 剩下的先不管了，直接先试下GAGES-II里面流域的水库密度和水库库容等属性，把代码跑一下。
+
 ## Quanfying
 
 这篇luweiwei学姐的文章，看看中小水库对径流影响的分析都注重了哪些因素。
@@ -472,3 +473,7 @@ table2总结了**WRM需要的变量以及数据源**，也copy一遍。
 ## climate
 
 也是一个流域属性影响的文章。
+
+## Real-time reservoir operation using recurrent neural networks and inflow forecast from a distributed hydrological model
+
+这是一篇新文章，yangdawen老师组的用RNN来进行水库影响的径流模拟的计算。
