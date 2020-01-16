@@ -2,7 +2,7 @@
 
 因为要基于数据驱动讨论这方面的问题，所以需要简单总结已有的文献，其中涉及的数据相关的内容，可以参考research－data项目。
 
-本文先按时间顺序总述各个文章的主要内容。
+本文先按时间顺序总述各个文章的主要内容，对于和自己所作的内容及方法不太近似的文章，大概了解方法即可，对于和自己内容比较相关的，方法可以明确下，重点的是结果的好坏要做到心中有数。
 
 ## Calibrating a watershed simulation model involving human interference
 
@@ -324,6 +324,27 @@ artificial water consumption是通过SWAT模型模拟计算出来的。
     - incoming shortwave radiation,
     - incoming longwave radiation
 
+## Rival framings: A framework for discovering how problem formulation uncertainties shape risk management trade-offs in water resource systems
+
+这是 Dr. Shen 推荐的一篇文章。Reed那个组做的。
+
+这篇文章介绍了一个发现 问题的不确定性 如何影响水资源系统风险管理权衡 的框架。不去做很多假设来简化问题，而是用一种新的框架。在其中，分析人员会对如何制定复杂的水资源管理问题提出多种相互矛盾的假设。这种框架可以帮助发现些其他问题建模方式不能发现的结果，有些会比较反直觉。比如最小化期望洪水损害会意外增加极端洪水事件的风险。
+
+多目标是很常见的，水资源管理者通常会通过优化水库调度来减少水文变化的多方面影响。考虑到大多数流域有多个水库，考虑多目标和多水库控制问题的高维和随机性，优化调度在数学上是有挑战的。当强调这些挑战时，研究会面临一些经常忽略的知识方面的不确定性。在经典的决策理论中，问题模型的设计要遵循选择的建模方法，而忽略选择的方法本身会影响预测的结果，而这些结果会被当作最优。有一些研究发现可获得的系统的性能是严重依赖于在优化中所选的目标，约束和决策的。也就是说一个人怎么建模他的问题会对结果产生意料之外的影响。这导致自然资源管理者提倡在参与式规划过程中探索多种替代的问题结构，以发现在不同利益相关者价值观下形成的竞争框架之间的关系
+
+这篇文章采用了一种构建式的决策辅助方法，此法中问题的建模本身是需要被构建的。经典的水资源系统设计的四步：
+
+1. 明确目标
+2. 转换目标为设计准则
+3. 使用这些准则来设计水资源规划方案
+4. 评价方案的结果，特别是考虑量化一个目标而不是另一个时的机会成本
+
+根据行为经济学的原则启发了一些新的决策理论：决策不意味着找到迷宫的出口（解决问题），决策是指maze的构建，这是一个自然的顺序，构建了迷宫，自然就找到解决的方法。
+
+这篇文章以越南一个四水库系统（平衡食物农业需水和能源生产蓄水，同时减少防洪风险）为例，构建迷宫的方式是构建并评价了 4个rival problem framings. 我们不仅改变每个公式中包含的目标和约束，而且改变这些目标的数学量化。我们构建了几个管理目标，代表了一系列多方利益风险偏好，从高度风险厌恶(例如，最小-最大目标)到风险中性(例如，期望目标)。通过优化红河水库调度，形成包含**风险态度梯度**的备选方案，并根据其他竞争方案的目标，重新评估每个方案的结果解决方案，试图减轻 预警分析师 要防范的无意识的系统偏差。我们还对每个问题公式下发现的帕累托近似操作策略进行可视化诊断，以更好地理解偏好和框架对最终系统行为的影响。
+
+这种构建迷宫的难点在于传统优化方法受到限制。不过可以用进化算法来处理。MOEA框架。
+
 ## Satellite Remote Sensing for Water Resources Management
 
 这篇文章Satellite Remote Sensing for Water Resources Management: Potential for Supporting Sustainable Development in Data-Poor Regions介绍了很多现在正在WRM中用的，可以用的以及将来可能会用到的遥感数据，并阐述了益处和面临的问题。
@@ -445,6 +466,15 @@ table2总结了**WRM需要的变量以及数据源**，也copy一遍。
 ## Quanfying
 
 这篇luweiwei学姐的文章，看看中小水库对径流影响的分析都注重了哪些因素。
+
+
+## Modeling and simulating of reservoir operation using the artificial neural network, support vector regression, deep learning algorithm
+
+这篇其实较早就看到了，Tiantian Yang 的几篇文章都是围绕水库径流模拟开展的，可以把他的文献再看看。
+
+三个机器学习算法来模拟水库运行，不同时间尺度－－月／日／时，模拟30年的水库出流。
+
+
 
 ## Quantifying
 
