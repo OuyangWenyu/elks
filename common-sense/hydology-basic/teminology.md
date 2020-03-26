@@ -56,6 +56,8 @@ In ecology, it is the difference between the actual water vapour pressure and th
 
 ## reanalysis
 
+可以参考：https://www.zhihu.com/question/309865061
+
 Reanalysis是一种系统性地为气候监测和研究生成数据集的方式。通过一种不变的（frozen）数据同化scheme和模型，在研究的时间范围内，每6-12小时吸收所有可用观测来构建Reanalyses。这个unchanging framework提供了一种在每个时间步长对气候状态的动态地一致估计。该框架的一个变化的组成是原始输入数据源。这是不可避免的，是因为变化的观测网络，包括但不限于radiosonde, satellite, buoy, aircraft and ship reports。
 
 Currently, approximately 7-9 million observations are ingested at each time step. Over the duration of each reanalysis product, the changing observation mix can produce artificial variability and spurious trends. Still, the various reanalysis products have proven to be quite useful when used with appropriate care.

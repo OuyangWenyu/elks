@@ -4,8 +4,6 @@
 
 ## 主要内容
 
-关于专业方面科普——可参考[知乎某一相关问题的回答](https://www.zhihu.com/question/56339077)。
-
 - 常识
     - 专业
     - 其他
@@ -19,19 +17,10 @@
     - latex文档
     - C/C++基本概念
     
-接下来给出运行本项目中的python程序所需的packages，conda安装：
+目前本项目中的python程序所需的packages有：
 
 ```Shell
-conda create --name elks python=3.7
-conda activate elks
-conda config --add channels conda-forge
-# 修改.condarc：固定conda-forge 和 defaults 的顺序后，执行：
-conda config --set channel_priority strict
-conda install -c conda-forge jupyterlab
-conda install -c conda-forge matplotlib
-conda install -c conda-forge seaborn
-conda install -c conda-forge earthpy
-conda install -c conda-forge hydrofunctions
+conda install -c conda-forge matplotlib, seaborn, earthpy，hydrofunctions
 ```
 
 ## 参与贡献
