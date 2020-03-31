@@ -17,7 +17,7 @@
 - [Including spatial distribution in a data-driven rainfall-runoff model to improve reservoir inflow forecasting in Taiwan](https://doi.org/10.1002/hyp.9559)：降雨空间分布对径流预测的帮助。
 - [A geomorphology-based ANFIS model for multi-station modeling of rainfall–runoff process](https://doi.org/10.1016/j.jhydrol.2013.03.024)：（1）加入地形地貌等属性有利于计算；（2）分类前处理对模型计算有益。
 - [Determination of Input for Artificial Neural Networks for Flood Forecasting Using the Copula Entropy Method](https://ascelibrary.org/doi/abs/10.1061/(ASCE)HE.1943-5584.0000932)：ANN可以做河道汇流。
-- [Prediction and Inference ofFlow Duration Curves Using Multioutput Neural Networks](https://doi.org/10.1029/2018WR024463)：预测FDC（Flow Duration Curves）。
+- [Prediction and Inference of Flow Duration Curves Using Multioutput Neural Networks](https://doi.org/10.1029/2018WR024463)：预测FDC（Flow Duration Curves）。
 - [Prediction of regional streamflow frequency using model tree ensembles](http://dx.doi.org/10.1016/j.jhydrol.2014.05.029)：一篇早期的用机器学习算法预测FDC（Flow Duration Curves）的文章。
 - [Geomorphology-based artificial neural networks (GANNs) for estimation of direct runoff over watersheds](https://doi.org/10.1016/S0022-1694(02)00313-X)：地貌单位线与神经网络的数学表达相近。
 - [Urban Water Flow and Water Level Prediction Based on Deep Learning](https://doi.org/10.1007/978-3-319-71273-4_26)：用cnn预测
@@ -52,7 +52,7 @@
 
 ## terrestrial total water storage
 
-- [Combining Physically Based Modeling and Deep Learning for Fusing GRACE Satellite Data: CanWe Learn From Mismatch?](https://doi.org/10.1029/2018WR023333)
+- [Combining Physically Based Modeling and Deep Learning for Fusing GRACE Satellite Data: Can We Learn From Mismatch?](https://doi.org/10.1029/2018WR023333)
 - [Full-flow-regime storage-streamflow correlation patterns provide insights into hydrologic functioning over the continental US](https://doi.org/10.1002/2016WR020283)
 
 
