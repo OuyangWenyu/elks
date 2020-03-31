@@ -23,7 +23,7 @@
 - [Urban Water Flow and Water Level Prediction Based on Deep Learning](https://doi.org/10.1007/978-3-319-71273-4_26)：用cnn预测
 - [Rainfall-Runoff modelling using Long-Short-Term-Memory (LSTM) networks](https://doi.org/10.5194/hess-2018-247)：目前是LSTM径流预报引用很高的文献。
 - [Benchmarking a Catchment-Aware Long Short-Term Memory Network (LSTM) for Large-Scale Hydrological Modeling](https://doi.org/10.5194/hess-2019-368)：把属性值作LSTM的输入时，结构有变化。
-- [Toward Improved Predictions in Ungauged Basins: Exploiting the Power ofMachine Learning](https://doi.org/10.1029/ 2019WR026065)：LSTM在PUB问题上的一个应用
+- [Toward Improved Predictions in Ungauged Basins: Exploiting the Power ofMachine Learning](https://doi.org/10.1029/2019WR026065)：LSTM在PUB问题上的一个应用
 - [Towards learning universal, regional, and local hydrological behaviors via machine learning applied to large-sample datasets](https://doi.org/10.5194/hess-23-5089-2019)：big data 下数据有协同增强作用，这点和传统水文模型的regional好，universal会差一些相比是一点优势。
 - [Enhancing streamflow forecast and extracting insights using long short term memory networks that assimilate recent observations](https://arxiv.org/abs/1912.08949)：同化历史径流数据
 - [A Rainfall-Runoff Model with LSTM-based Sequence-to-Sequence Learning](https://doi.org/10.1029/2019WR025326)
