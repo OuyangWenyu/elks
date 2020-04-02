@@ -17,11 +17,8 @@
     - latex文档
     - C/C++基本概念
     
-目前本项目中的python程序所需的packages有：
-
-```Shell
-conda install -c conda-forge matplotlib, seaborn, earthpy，hydrofunctions
-```
+目前本项目中的python程序所需的packages可以参考：https://github.com/OuyangWenyu/hydrus
+还用到了earthpy，hydrofunctions等库。
 
 ## 参与贡献
 
