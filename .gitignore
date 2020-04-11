@@ -936,3 +936,4 @@ buildNumber.properties
 /keras-examples/*.hdf5
 /.vscode/
 /math-basics/nn/cnn/data
+/envs/
