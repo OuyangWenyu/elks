@@ -935,5 +935,8 @@ buildNumber.properties
 /keras-examples/model.yaml
 /keras-examples/*.hdf5
 /.vscode/
-/math-basics/nn/cnn/data
+/math-basics/nn/cnn/data/
 /envs/
+/docs/build/
+/math-basics/equation/torchdiffeq/
+/math-basics/equation/NNET_MORE/

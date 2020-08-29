@@ -69,8 +69,9 @@ jupyter lab
 # 复制粘贴入你win10下的浏览器即可访问了，然后在浏览器下继续当前操作
 # 进入当前环境
 conda activate /mnt/d/Code/elks/envs
-conda install -c conda-forge earthpy, hydrofunctions, seaborn, scikit-learn
+conda install -c conda-forge earthpy, hydrofunctions, seaborn, scikit-learn, sympy
 conda install pytorch torchvision cpuonly -c pytorch
+conda install -c conda-forge sphinx sphinx-autobuild sphinx_rtd_theme recommonmark
 ```
 
 ## 参与贡献

@@ -41,6 +41,9 @@
 - [Simulating California reservoir operation using the classification and regression-tree algorithm combined with a shuffled cross-validation scheme](https://doi.org/10.1002/2015WR017394)：不同的拟合调度规则的方法。
 - [A Statistical Graphical Model of the California Reservoir System](https://doi.org/10.1002/2017WR020412)
 - [Quantifying the roles of single stations within homogeneous regions using complex network analysis](https://doi.org/10.1016/j.jhydrol.2018.06.050)
+- [Tree-based reinforcement learning for optimal water reservoir operation](http://dx.doi.org/10.1029/2009WR008898)
+- [Deep Reinforcement Learning for Cascaded Hydropower Reservoirs Considering Inflow Forecasts](https://link.springer.com/article/10.1007/s11269-020-02600-w)
+
 
 ## river and water body
 

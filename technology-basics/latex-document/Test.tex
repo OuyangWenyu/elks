@@ -1,0 +1,39 @@
+\documentclass{article}
+
+\begin{document}
+First document. This is a simple example, with no
+extra parameters or packages included.
+
+\begin{displaymath}
+    x=ReLU(W_{xx}x^{(t)}_0+b_{xx})
+\end{displaymath}
+
+\begin{displaymath}   
+g^{(t)}=tanh(D(W_{gx}x^{(t)})+D(W_{gh}h^{(t-1)})+b_g)
+\end{displaymath}
+
+\begin{displaymath}
+i^{(t)}=\sigma (D(W_{ix}x^{(t)})+D(W_{ih}h^{(t-1)})+b_i)
+\end{displaymath}
+
+\begin{displaymath}
+f^{(t)}=\sigma (D(W_{fx}x^{(t)})+D(W_{fh}h^{(t-1)})+b_f)
+\end{displaymath}
+
+\begin{displaymath}
+o^{(t)}=\sigma (D(W_{ox}x^{(t)})+D(W_{oh}h^{(t-1)})+b_o)
+\end{displaymath}
+
+\begin{displaymath}
+s^{(t)}=g^{(t)}\bigodot i^{(t)}+s^{(t-1)}\bigodot f^{(t)}
+\end{displaymath}
+
+\begin{displaymath}
+h^{(t)}=tanh(s^{(t)})\bigodot o^{(t)}
+\end{displaymath}
+
+\begin{displaymath}
+y^{(t)}=W_{hy}h^{(t)}+b_y
+\end{displaymath}
+
+\end{document}
