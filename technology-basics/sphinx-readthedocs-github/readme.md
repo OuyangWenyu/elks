@@ -106,9 +106,7 @@ make html
 
 进入[readthedocs官网](https://readthedocs.org/)，注册自己的账号，注册之后验证自己的邮箱，然后 Connect your Accounts 连接到自己的github账号。
 
-进入ReadtheDocs个人面板，点击Import a Project，然后会刷新出自己github下的public项目，如果项目列表为空或者未显示当前项目，点击右上角等待刷新项目即可。这里我选择elks。
-
-在导入之前先将刚刚创建好的docs推送上github，然后再来关联。推送的时候注意在tignore文件中添加build/目录：
+在导入github项目到readmedocs之前先将刚刚创建好的docs推送上github，然后再来关联。推送的时候注意在tignore文件中添加build/目录：
 
 ```.gitignore
 /docs/build/
@@ -122,6 +120,21 @@ git commit -m 'update elks'
 git push
 ```
 
-然后build即可看到项目构建结果，然后可以在readthedocs的项目管理里选择“simplified Chinese”来配置中文选项，并重新构建。
+进入ReadtheDocs个人面板，点击Import a Project，然后会刷新出自己github下的public项目，如果项目列表为空或者未显示当前项目，点击右上角等待刷新项目即可。这里我选择elks。然后勾选“编辑项目高级选项”，点击“下一页”。
 
-现在
+自己填写内容，这里我的填写：
+
+- Description：elks项目的中文文档
+- 语言: Simplified Chinese
+
+这时候如果就直接点击“Build version”，进行项目构建，可能会报错：
+
+Sphinx error: master file [..]/checkouts/latest/contents.rst not found
+
+根据：[Sphinx error: master file [..]/checkouts/latest/contents.rst not found](https://github.com/readthedocs/readthedocs.org/issues/2569)的说明，需要在conf.py文件中加入：
+
+```Python
+master_doc = 'index'
+```
+
+这样再重新git push，再尝试即可。
