@@ -16,6 +16,8 @@
 
 简而言之，就是自己在自己代码项目里写RST文件，用本地的Sphinx来使对文档做配置，也可以预览自己的文件效果，然后上传到github，github和 ReadtheDocs 联系起来，ReadtheDocs就会自动监测github的更新，然后会自动生成html文档并给地址链接，将链接放到自己github项目的md文件下即可。
 
+## 配置
+
 首先本地安装使用sphinx。
 
 直接使用conda或者pip安装即可
