@@ -49,8 +49,9 @@ COVID19检测资源目前还不清楚，有的只有符合症状才能检测，�
 
 - CVS：全美目前有2200多个检测点，[这里预约](https://www.cvs.com/minuteclinic/covid-19-testing?WT.tsrc=affiliate&cjevent=490962c5f77211ea824500c90a240610&CID=AFF:5370367:100147857:13082683)。我填写了一个问卷，然后得到了两个地方的推荐，但是在state college都没有，不过这两个地方的检测貌似是不需要预约的。
 - Walmart：[这里预约](https://corporate.walmart.com/covid19testing)，看图中的点颜色可以判断是eTrueNorth Lab还是Quest Diagnostics，如果附近的检测点由 eTrueNorth Lab运营，[这里预约](https://www.doineedacovid19test.com/)；如果是Quest Diagnostics运营，[这里预约](https://myquest.questdiagnostics.com/web/mycovid19test)。Walmart state college是有的，稍后详述。
+- [Rite Aid](https://www.riteaid.com/pharmacy/services/covid-19-testing?utm_source=ebay_affiliate&utm_medium=affiliate&utm_term=21181&utm_campaign=Affiliate&utm_content=8-9870&source=pepperjam&publisher=21181&click=3276318455&clickId=3276318455)：直接网上预约就行，按照提示，用自己的谷歌账号登陆，然后会进入到自己的账号页面，然后预约，第一次预约的时候，会要求同意一个文件，同意即可，可以提前四天预约。
 
-还有：[Walgreens](https://www.walgreens.com/findcare/covid19/testing?cjevent=6f18c79bf77211ea834700bd0a240613&CID=5370367&ec=100147857&PID=100147857&AID=10824661&SID=159477X1626214Xd1645b7d9a552ebe456d1d75cc9fec2c), [Rite Aid](https://www.riteaid.com/pharmacy/services/covid-19-testing?utm_source=ebay_affiliate&utm_medium=affiliate&utm_term=21181&utm_campaign=Affiliate&utm_content=8-9870&source=pepperjam&publisher=21181&click=3276318455&clickId=3276318455)等，这些state college也没有，所以暂不看了。
+还有：[Walgreens](https://www.walgreens.com/findcare/covid19/testing?cjevent=6f18c79bf77211ea834700bd0a240613&CID=5370367&ec=100147857&PID=100147857&AID=10824661&SID=159477X1626214Xd1645b7d9a552ebe456d1d75cc9fec2c)等，这些state college也没有，所以暂不看了。
 
 另外，各州政府以及本地local pharmacy 也会有提供Covid19检测的，可以查看美国卫生部[这个网页](https://www.hhs.gov/coronavirus/community-based-testing-sites/index.html)，需要确定他们提供的是否是核酸检测，在预约前要打电话问清楚，测试点的网站应该也有说明，可查询好。
 
@@ -84,7 +85,9 @@ Mount Nittany Medical Center 前面也已经提到了，不过上面没给网站
 
 第三个地方是 Mount Nittany Health - Blue Course Drive - Lab Services 。网站：https://www.mountnittany.org/specialties-and-services/lab-and-imaging-locations 。第二项Mount Nittany Health – Blue Course Drive 是目标地。这里也是需要 appointment 和 referral 的。点击进入后，可以看到网页上有：“Dedicated COVID-19 test collection site established at Mount Nittany Health - Blue Course Drive”，进入查看更多详细信息。里面提到：“This site will only be used by primary care patients from either health system who have received an appointment at the collection site by their primary care provider.”
 
-总之，可以看到在 state college 总共有 Walmart，Mount Nittany Medical Center，Mount Nittany Health - Blue Course Drive - Lab Services, MedExpress Urgent Care 四个地方可以检测。前三者都是需要 appointment 和 referral 的，最后一个urgent care 感觉估计是比较贵的。另外CVS 的walk-in 检测貌似是不需要预约的，不过最近的地方也比较远。
+总之，可以看到在 state college 总共有 Rite Aid, Walmart，Mount Nittany Medical Center，Mount Nittany Health - Blue Course Drive - Lab Services, MedExpress Urgent Care 五个地方可以检测。第一个是可以直接预约的，然后三者都是需要 appointment 和 referral 的，最后一个urgent care 感觉估计是比较贵的。另外CVS 的walk-in 检测貌似是不需要预约的，不过最近的地方也比较远。
+
+综上，还是选择 Rite Aid 较好。
 
 另外，有人建议在纽约做检测，能较快出结果，因为我的机票也是纽约的，所以也是可行的。稍后再补充纽约的信息：https://www.nychealthandhospitals.org/covid-19-testing-sites/
 
@@ -93,9 +96,9 @@ Mount Nittany Medical Center 前面也已经提到了，不过上面没给网站
 
 ## 如何去检测
 
-前面提到的 appointment 和 referral 感觉意思应该是必须要得到医生处方，才能获得检测的资格。所以检测的关键就变为如何拿到referral了，这就比较麻烦了，所以最好还是选择一个不需要referral的地方：
+ appointment 和 referral 感觉意思应该是必须要得到医生处方，才能获得检测的资格。所以检测的关键就变为如何拿到referral了，这就比较麻烦了，所以最好还是选择一个不需要referral的地方：
 
-- 村里就只有 MedExpress Urgent Care 一个地方了
+- 村里的 **Rite Aid** 是首选，并且出结果时间在1-3天，是完全符合要求的。
+- MedExpress Urgent Care 也可以看看
 - 最近的CVS提前一天预约
 - 提前天去纽约，然后在纽约检测，不过这样在纽约的费用就贵了
-- 如果能容易拿到referral，就能在村里三个地方检测

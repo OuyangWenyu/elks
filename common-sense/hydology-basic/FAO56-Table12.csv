@@ -1,0 +1,142 @@
+Crop,Kc ini,Kc mid,Kc end,Maximum Crop Height (h) (m)
+a.  Small Vegetables,0.7,1.05,0.95,
+Broccoli,,1.05,0.95,0.3
+Brussel Sprouts,,1.05,0.95,0.4
+Cabbage,,1.05,0.95,0.4
+Carrots,,1.05,0.95,0.3
+Cauliflower,,1.05,0.95,0.4
+Celery,,1.05,1.00,0.6
+Garlic,,1.00,0.70,0.3
+Lettuce,,1.00,0.95,0.3
+Onions - dry,,1.05,0.75,0.4
+Onions - green,,1.00,1.00,0.3
+Onions - seed,,1.05,0.80,0.5
+Spinach,,1.00,0.95,0.3
+Radish,,0.90,0.85,0.3
+b. Vegetables 每 Solanum Family (Solanaceae),0.6,1.15,0.80,
+Egg Plant,,1.05,0.90,0.8
+Sweet Peppers (bell),,1.050,0.90,0.7
+Tomato,,1.150,0.70-0.90,0.6
+c. Vegetables 每 Cucumber Family (Cucurbitaceae),0.5,1.00,0.80,
+Cantaloupe,0.5,0.85,0.60,0.3
+Cucumber        每 Fresh Market,0.6,1.000,0.75,0.3
+每 Machine harvest,0.5,1.00,0.90,0.3
+"Pumpkin, Winter Squash",,1.00,0.80,0.4
+"Squash, Zucchini",,0.95,0.75,0.3
+Sweet Melons,,1.05,0.75,0.4
+Watermelon,0.4,1.00,0.75,0.4
+d.  Roots and Tubers,0.5,1.10,0.95,
+"Beets, table",,1.05,0.95,0.4
+Cassava  每 year 1,0.3,0.800,0.30,1.0
+Cassava 每 year 2,0.3,1.10,0.50,1.5
+Parsnip,0.5,1.05,0.95,0.4
+Potato,,1.15,0.750,0.6
+Sweet Potato,,1.15,0.65,0.4
+Turnip (and Rutabaga),,1.10,0.95,0.6
+Sugar Beet,0.35,1.20,0.700,0.5
+e. Legumes (Leguminosae),0.4,1.15,0.55,
+"Beans, green",0.5,1.050,0.90,0.4
+"Beans, dry and Pulses",0.4,1.150,0.35,0.4
+Chick pea,,1.00,0.35,0.4
+Fababean (broad bean) 每 Fresh,0.5,1.150,1.10,0.8
+Fababean (broad bean) 每 Dry/Seed,0.5,1.150,0.30,0.8
+Grabanzo,0.4,1.15,0.35,0.8
+Green Gram and Cowpeas,,1.05,0.60-0.35,0.4
+Groundnut (Peanut),,1.15,0.60,0.4
+Lentil,,1.10,0.30,0.5
+Peas 每 Fresh,0.5,1.150,1.10,0.5
+Peas 每 Dry/Seed,,1.15,0.30,0.5
+Soybeans,,1.15,0.50,0.5-1.0
+f. Perennial Vegetables (with winter dormancy and initially bare or mulched soil),0.5,1.00,0.80,
+Artichokes,0.5,1.00,0.95,0.7
+Asparagus,0.5,0.950,0.30,0.2-0.8
+Mint,0.60,1.15,1.10,0.6-0.8
+Strawberries,0.40,0.85,0.75,0.2
+g.  Fibre Crops,0.35,,,
+Cotton,,1.15-1.20,0.70-0.50,1.2-1.5
+Flax,,1.10,0.25,1.2
+Sisal,,0.4-0.7,0.4-0.7,1.5
+h.  Oil Crops,0.35,1.15,0.35,
+Castorbean (Ricinus),,1.15,0.55,0.3
+"Rapeseed, Canola",,1.0-1.15,0.35,0.6
+Safflower,,1.0-1.15,0.25,0.8
+Sesame,,1.10,0.25,1.0
+Sunflower,,1.0-1.15,0.35,2.0
+i.  Cereals,0.3,1.15,0.4,
+Barley,,1.15,0.25,1
+Oats,,1.15,0.25,1
+Spring Wheat,,1.15,0.25-0.4,1
+Winter Wheat - with frozen soils,0.4,1.15,0.25-0.4,1
+Winter Wheat - with non-frozen soils,0.7,1.15,0.25-0.4,
+"Maize, Field (grain) (field corn)",,1.20,"0.60,0.35",2
+"Maize, Sweet  (sweet corn)",,1.15,1.05,1.5
+Millet,,1.00,0.30,1.5
+Sorghum 每 grain,,1.00-1.10,0.55,1-2
+Sorghum 每 sweet,,1.20,1.05,2-4
+Rice,1.05,1.20,0.90-0.60,1
+j.   Forages,,,,
+Alfalfa Hay  每 averaged cutting effects,0.40,0.9500,0.90,0.7
+Alfalfa Hay  每 individual cutting periods,0.4000,1.2000,1.1500,0.7
+Alfalfa Hay  每 for seed,0.40,0.50,0.50,0.7
+Bermuda hay            每 averaged cutting effects,0.55,1.0000,0.85,0.35
+Bermuda hay  每 Spring crop for seed,0.35,0.90,0.65,0.4
+"Clover hay, Berseem 每 averaged cutting effects",0.40,0.9000,0.85,0.6
+"Clover hay, Berseem每 individual cutting periods",0.4000,1.1500,1.1000,0.6
+Rye Grass hay            每 averaged cutting effects,0.95,1.05,1.00,0.3
+Sudan Grass hay (annual) 每 averaged cutting effects,0.50,0.9000,0.85,1.2
+Sudan Grass hay (annual)每 individual cutting periods,0.5000,1.1500,1.1000,1.2
+Grazing Pasture - Rotated Grazing,0.40,0.85-1.05,0.85,0.15-0.30
+Grazing Pasture- Extensive Grazing,0.30,0.75,0.75,0.10
+Turf grass - cool season,0.90,0.95,0.95,0.10
+Turf grass - warm season,0.80,0.85,0.85,0.10
+k.  Sugar Cane,0.40,1.25,0.75,3
+l.  Tropical Fruits and Trees,,,,
+Banana  每 1st year,0.50,1.10,1.00,3
+Banana 每 2nd year,1.00,1.20,1.10,4
+Cacao,1.00,1.05,1.05,3
+Coffee             每 bare ground cover,0.90,0.95,0.95,2-3
+Coffee    每 with weeds,1.05,1.10,1.10,2-3
+Date Palms,0.90,0.95,0.95,8
+Palm Trees,0.95,1.00,1.00,8
+Pineapple    每 bare soil,0.50,0.30,0.30,0.6-1.2
+Pineapple 每 with grass cover,0.50,0.50,0.50,0.6-1.2
+Rubber Trees,0.95,1.00,1.00,10
+Tea     每 non-shaded,0.95,1.00,1.00,1.5
+Tea   每 shaded,1.10,1.15,1.15,2
+m.  Grapes and Berries,,,,
+Berries (bushes),0.30,1.05,0.50,1.5
+Grapes             每 Table or Raisin,0.30,0.85,0.45,2
+Grapes   每 Wine,0.30,0.70,0.45,1.5-2
+Hops,0.3,1.05,0.85,5
+n.  Fruit Trees,,,,
+"Almonds, no ground cover",0.40,0.90,0.6500,5
+"Apples, Cherries, Pears-    no ground cover, killing frost",0.45,0.95,0.7000,4
+"Apples, Cherries, Pears-    no ground cover, no frosts",0.60,0.95,0.7500,4
+"Apples, Cherries, Pears-    active ground cover, killing frost",0.50,1.20,0.9500,4
+"Apples, Cherries, Pears-    active ground cover, no frosts",0.80,1.20,0.8500,4
+"Apricots, Peaches, Stone Fruit-    no ground cover, killing frost",0.45,0.90,0.6500,3
+"Apricots, Peaches, Stone Fruit-      no ground cover, no frosts",0.55,0.90,0.6500,3
+"Apricots, Peaches, Stone Fruit-     active ground cover, killing frost",0.50,1.15,0.9000,3
+"Apricots, Peaches, Stone Fruit-     active ground cover, no frosts",0.80,1.15,0.8500,3
+"Avocado, no ground cover",0.60,0.85,0.75,3
+"Citrus, no ground cover- 70% canopy",0.70,0.65,0.70,4
+"Citrus, no ground cover- 50% canopy",0.65,0.60,0.65,3
+"Citrus, no ground cover- 20% canopy",0.50,0.45,0.55,2
+"Citrus, with active ground cover or weeds- 70% canopy",0.75,0.70,0.75,4
+"Citrus, with active ground cover or weeds- 50% canopy",0.80,0.80,0.80,3
+"Citrus, with active ground cover or weeds- 20% canopy",0.85,0.85,0.85,2
+Conifer Trees,1.00,1.00,1.00,10
+Kiwi,0.40,1.05,1.05,3
+Olives (40 to 60% ground coverage by canopy),0.65,0.70,0.70,3-5
+"Pistachios, no ground cover",0.40,1.10,0.45,3-5
+Walnut Orchard,0.50,1.10,0.6500,4-5
+o.  Wetlands 每 temperate climate,,,,
+"Cattails, Bulrushes, killing frost",0.30,1.20,0.30,2
+"Cattails, Bulrushes, no frost",0.60,1.20,0.60,2
+"Short Veg., no frost",1.05,1.10,1.10,0.3
+"Reed Swamp, standing water",1.00,1.20,1.00,1-3
+"Reed Swamp, moist soil",0.90,1.20,0.70,1-3
+p.   Special,,,,
+"Open Water, < 2 m depth
+or in subhumid climates or tropics",,1.05,1.05,
+"Open Water, > 5 m depth, clear of turbidity, temperate climate",,0.6500,1.2500,
