@@ -170,15 +170,38 @@ sudo chgrp family file.txt
 
 ```Shell
 sudo chown -R fayer share/
+sudo chgrp -R fayer share/
 ```
 
-接下来一个场景：要在某台主机上共享一些文件给我实验室的人，但这台主机上还有其他非实验室的人在使用，我只想让实验室的人查看和修改这些文件，其他人不行。管理员要有root权限。详情参考原文。
+如果想要修改用户名密码等，可以参考：https://www.linuxprobe.com/linux-ubuntu-teach.html
+
+修改root密码：
+
+```Shell
+sudo passwd root
+```
+
+修改用户信息：
+
+```Shell
+sudo vi /etc/passwd          # 找到原先的用户名，将其改为自己的用户名
+sudo vi /etc/shadow        # 找到原先用户名（所有的名字都要改），改为自己的用户名
+```
+
+如果要给普通用户sudo权限，可用参考：https://linux.cn/article-10576-1.html
+
+想要用户使用 sudo 执行管理任务，只需在root身份下使用以下命令将它添加到 sudo 组：
+
+```Shell
+su
+adduser fayer sudo
+```
 
 ## 用户权限下的操作实践
 
 如果之前一直都是管理员下使用Ubuntu，刚刚转到用户角色，可能会有些不习惯，这里记录一些日常实践。
 
-### 安装软件
+### 用 mobaxterm 连接 Ubuntu
 
 比较方便好用的连接linux服务器的工具推荐：[mobaxterm](https://mobaxterm.mobatek.net/)。
 
@@ -210,6 +233,8 @@ $ python  --version
 
 这样，就可以使用配置环境下的相关软件了，比如python,pip等。
 
+### 安装 python IDE 之 PyCharm
+
 安装IDE，还是推荐pycharm，首先可以在本地下载安装包，这里使用这个链接: https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=linux 下载的，然后再使用mobaxterm的upload上传到服务器文件夹中。
 
 然后解压文件：
@@ -233,6 +258,64 @@ sh pycharm.sh
 ```
 
 这时候稍等一会儿，会弹出pycharm的界面。可以一直默认。然后如果是专业版，需要激活，可以使用学生账号来激活，这是免费的。激活后就可以使用了。
+
+### 安装用户共享的conda环境
+
+在服务器上，重复安装某些公用的软件就没有必要了，所以可以考虑安装一个共享的。一般情况下在root用户下用apt-get install安装的软件对所有用户都是可用的。
+
+这里以miniconda为例，简单记录下全局安装miniconda的过程，主要参考了：[张兴远知乎](https://www.zhihu.com/question/277053071/answer/391614802)
+
+首先，用su命令进入root用户
+
+```Shell
+$ su
+```
+
+然后在root用户下，将miniconda安装到/opt/miniconda下。主要参考：https://blog.csdn.net/chch2010523/article/details/107605942
+
+```Shell
+cd /opt
+# 下载安装包
+wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh
+# 安装
+sh Miniconda3-latest-Linux-x86_64.sh
+# 执行安装时, 将安装位置改为 /opt/miniconda，即在Miniconda3 will now be installed into this location 这一步时，输入：
+/opt/miniconda
+# 剩下的默认按回车即可
+```
+
+接下来创建miniconda组，将用户（没创建用户的可以参考上面创建用户操作，这里用户以 owen411 为例）添加到改组：
+
+```Shell
+groupadd miniconda # 创建 miniconda 组
+adduser owen411 miniconda # 将需要的用户添加至 miniconda 组
+chgrp -R miniconda /opt/miniconda # 移交目录管理权
+chmod 770 -R /opt/miniconda # 设置读写权限
+chmod g+s /opt/miniconda # 设置组继承
+chmod g+s `find /opt/miniconda/ -type d` # 设置子目录组继承
+chmod g-w /opt/miniconda/envs # 关闭共享环境的写入权限
+source /opt/miniconda/bin/activate # root用户下启动 miniconda 环境
+conda create -n hydroDLShare python=3.7 # 创建共享环境
+```
+
+这样设置之后的效果是：由root用户创建的环境会保存在/opt/anaconda/envs中，所有anaconda组成员都可以访问。
+
+参考的原文说“用户自己创建的环境则会保存至~/.conda/envs中，但是所有下载的pkg会共享在/opt/anaconda/pkgs中，即如果是别人装过的包（比如下载缓慢的PyTorch）则不用重新下载”，我实际执行的时候，发现用户是不能用这里的conda来创建环境的。所以还是暂时在自己的环境下去创建环境好了。
+
+不过要想用户使用，还需要再给用户配置下配置文件。
+
+可用在用户级别下配置，比如在owen411用户登陆条件下，进入其home的文件夹：
+
+```Shell
+cd
+vim .bashrc
+# 然后在配置文件中加上：
+export PATH="/opt/miniconda/bin:$PATH"
+```
+
+这样就可用在owen411用户下使用conda了。
+
+也可以修改系统级环境文件： /etc/profile ，这里暂时就不用这种方法了。
 
 ## 管理远程会话
 
