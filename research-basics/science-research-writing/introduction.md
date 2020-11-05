@@ -1,6 +1,6 @@
 # how to write an introduction
 
-首先，开始之前，要明确自己做了什么，发现了什么，所以最好的写introduction的时间是在自己有一个草稿之后，不过个人理解，还是得先明确下各部分结构，草稿逻辑才会更好，这是一个互相迭代的过程，所以明确结构和梳理自己的内容是可以同步进行的。
+一般情况下，要先知道自己核心报告的部分是什么内容，才能回过头来写Introduction这部分，所以实践中，应该先写Methodology和Results部分，在明确自己做了什么，发现了什么之后，再来写introduction，即在自己有一个草稿之后再来处理开头。不过个人理解，先明确下各部分结构，草稿逻辑才会更好，这是一个互相迭代的过程，所以明确结构和梳理自己的内容是可以同步进行的。
 
 ## structure
 
@@ -114,9 +114,9 @@ We used a batch processing system because it was more effective; ___________ it 
 
 一个常见的问题是能不能用we，we这个词在论文中可以用来指代自己的研究团队，但是不能指代人类等，如果想说人们...，可以使用It结构(It is known/ thought that…)，而不是用We know/think that… 。
 
-另外，常用被动语态来替代we，尤其是在核心的report部分。
+另外，常用被动语态来替代we，尤其是在核心的report部分。不过实际看文章和写文章的时候还是能看到很多论文里大量用We，所以也不是太绝对，个人认为还是保持用法多样性不让人读起来感觉词语贫乏为原则。
 
-另外，I也是要避免使用的，如果需要表达自己做了什么，最好使用here，in this study这样的词来让读者明白在指代自己的工作。也可以使用一些指代词来替代I或者we。比如This article或者the present paper等。
+不过，I也是要避免使用的，如果需要表达自己做了什么，最好使用here，in this study这样的词来让读者明白在指代自己的工作。也可以使用一些指代词来替代I或者we。比如This article或者the present paper等。
 
 但是被动语态有个问题就是没有明确的指明某些工作到底是作者做的还是其他研究人员的成果，因此读者可能会有疑惑，所以相比于单纯的被动语态(x is presented)，更好地是使用（This article/the present paper）。
 
@@ -151,9 +151,73 @@ skim对写作有什么用？
 
 ## build a model
 
-接下来创建一个introduction的model，然后用关键点来帮助写作。model就是一个框架，不包含具体的内容，能快速套到自己的文章中用。
+接下来创建一个introduction的model，然后用关键点来帮助写作。model就是一个框架，不包含具体的内容，能快速套到自己的文章中用。这里先记录资料中给的例子。
 
-这步等到自己做的时候再开始。
+明确一句话中作者做了什么（不是他说了什么）的一个方法是想象这句话不小心被删掉了，读的时候会和没删的时候有什么区别？如果这句话又回来了，那么会对自己判断原文的意图有什么影响？
+
+另一种方法是看语法和词汇的线索，这个前面已经提到了。
+
+接下来看看一个典型的写作模式。
+
+### 第一句：建立研究主题的重要性
+
+一上来就 introduce the topic 不能帮助论文的写作。大多数论文都会从说明研究领域或研究主题很有用开始：或关注研究的数量或研究多么实用，或简单的表达研究领域重要。*much study in recent years* 或者 *plays a major role* 是这里很常用的句子。
+
+### 第二句：给读者提供大体的背景信息
+
+文章一般都从被大家广泛接受和建立的事实开始。这能保证读者可以和作者有一样的背景信息来准备好读这篇文章。
+
+那应该从什么样的事实开始呢？这取决于主题有多广泛以及读者会是谁。如果领域很具体，那么很多读者都有背景知识，就可以从相对具体的信息开始，反之，则需要从更一般的知识开始。
+
+如果有不只一个背景知识点需要开始，怎么知道从哪个开始呢？就从更general的那一个开始，更多读者知道的那一个。这是一个“meeting place”的fact，从这里所有读者可以一起开始，之后就可以写更具体的信息了。每次开始述说细节前都要记得给读者展示general picture：**show them the wall before you examine the bricks！** 并且，不要让句子与句子之间有任何gap，能让读者十分平滑地读完。
+
+记住背景知识对作者是熟悉地，但是对读者不是地。因此，要想让读者更广泛，需要把背景事实阐述清楚。
+
+如果仍然不知道第一句该怎么开始，看看标题，暂时还没有标题的话就临时想一个，想一些关键主题词，然后从这些词的定义或相关的事实开始。
+
+### 第三句：前两句话的重复，但是以一种更加具体的方式，引用一些文献来支持背景信息和研究意义
+
+这里还不是文献综述，依然是领域gereral research背景的一部分。文献综述在稍后，文献综述引用的文献更多处理的是独立的研究和他们的方法与结果，也更长，可能很多段。
+
+写Introduction的时候要问自己三个问题：
+
+1. Which of the research papers I have read should be mentioned somewhere in the Introduction? 即有哪些文献是自己准备写到introduction里的？这很重要，因为它通过指出领域内的关键研究人及目前的研究进展为读者绘出了research “map”。这些引用给读者一个清楚的认识，认识到正在写的这篇文章在研究地图中的哪个未知，已经是怎么和其他工作联系起来的。
+2. Which ones should be part of the background to the research and which ones should go in the literature review which comes later in the Introduction? 哪些文献对应研究背景哪些用来做文献综述呢？如果这些论文是被广泛了解，可靠的，那么就可以用一般现在时在背景里说。文献综述则是描述最近的进展，通常直接提作者的名字，时态一般是一般过去时或现在完成时。
+3. What order should I mention them in? Who comes first and who comes last? 怎么定顺序？后面第6句有讨论。
+
+### 第四句：描述一般问题领域或领域内当前研究重点
+
+到这也还没有说要写的论文要处理的具体问题；描述的是领域内当前热点，许多研究者感兴趣的问题，能指引读者到本文研究问题的东西。记住要保持对问题领域或研究热点的一般性描述。
+
+### 第五句:提供一般性问题领域到文献综述的过渡句
+
+一般的规则是，你应该在任何有用的地方引用之前或当前的研究，即使是在主要提供过渡功能的句子中。
+
+### 第六句：提供领域内关严研究的简要综述
+
+不能仅仅把文献随意按顺序罗列到页面上；应该组织引用的研究让读者以一种逻辑方式来处理它们，下面是三种常见的选项：
+
+- chronological：按时间顺序来处理
+- different approaches/theories/models：将研究按照方法进行分组。将类似的项目组合在一起，可以帮助你避免网球比赛效应，即来回跳跃。在文献综述中可以However或On the other hand来开头每句话
+- general/specific：从领域内一般性研究开始，逐渐移动到和自己研究相关的领域。
+
+### 第七句：描述研究的gap
+
+这是你开始介绍你的论文的目的和明确你要处理的问题的地方。为了做到这一点，有必要创建一个研究空间。可以通过描述之前研究中的一个问题或指出研究中存在的gap来做到这一点。传统的做法是用信号连接词(如However或Although)来引入它。在论文写作中，用问句的形式来提问是不常见的;相反，你可以把它表述成你想要验证的一个预测或假设。
+
+不要羞于指出以前研究中的问题。首先，可能有必要解释你为什么做了你的研究，其次，这里使用的语言通常是尊重和客观的，因此不被认为是冒犯。在本单元结束时的词汇部分有讨论语言的礼貌方面。
+
+在这个阶段，您可能需要更多的背景信息(例如，你可能需要详细说明你选择研究的材料的特性，或者描述你计划改进的器件的特殊部分)。研究写作需要比你之前在本科写作中提供的背景信息多得多，背景信息多一点总比少一点好。
+
+### 第八句：描述文章本身
+
+在这个阶段，将转入目前的工作。你可以描述它目的或焦点是什么，给出它的结构或这些的组合。哦按段句子是用主动语态还是被动语态。
+
+一般用一般现在时来描述作品本身(Th is paper is organised as follows 或 This study focuses on)和一般过去时来谈论工作的目标(Th e aim of this project was…)，因为在“real time”中，目标发生在工作进行之前。也可以用一般现在时陈述目的(Th e aim of this work is…)。特别是当你提交的论文只完成了部分目标，而其余的工作将在稍后阶段完成和报告时，更是如此。
+
+### 第九、十句：给出论文methodology的细节；说明发现
+
+虽然你可以在Introduction中介绍研究方法或研究成果，但注意不要在这一点上讲得太详细，否则你会发现在Methodology或Results部分没有什么可写的。
 
 ## vocabulary
 
@@ -257,7 +321,14 @@ Here are some examples of how these are used:
 - assume
 - attempt
 - calculate
-- categorise carry out choose claim classify collect compare concentrate (on) conclude conduct confi rm consider construct correlate deal with debate defi ne demonstrate describe design detect determine
+- categorise 
+- carry out
+- choose
+- claim
+- classify 
+- collect
+- compare
+- concentrate (on) conclude conduct confi rm consider construct correlate deal with debate define demonstrate describe design detect determine
 develop
 discover discuss enhance establish estimate evaluate examine explain explore extend fi nd focus on formulate generate identify illustrate implement imply improve incorporate indicate interpret introduce investigate measure model monitor note observe prefer
 obtain
@@ -280,7 +351,7 @@ Here are some examples of how these are used:
 
 描述以前研究还没做的东西，还没强调的问题，而要写的论文做了的东西，比如However, few studies have focused on…
 
-ambiguous computationally demanding confused defi cient doubtful expensive false far from perfect ill-defi ned impractical improbable inaccurate inadequate incapable (of) incompatible (with) incomplete inconclusive inconsistent inconvenient incorrect
+ambiguous computationally demanding confused deficient doubtful expensive false far from perfect ill-defi ned impractical improbable inaccurate inadequate incapable (of) incompatible (with) incomplete inconclusive inconsistent inconvenient incorrect
 (the) absence of (an) alternative approach (a) challenge (a) defect (a) diffi culty (a) disadvantage (a) drawback (an) error (a) fl aw (a) gap in our knowledge (a) lack (a) limitation (a) need for clarifi cation (the) next step no correlation (between) (an) obstacle (a) problem (a) risk (a) weakness ineff ective ineffi cient inferior infl exible insuffi cient meaningless misleading non-existent not addressed not apparent not dealt with not repeatable not studied not suffi ciently + adjective not well understood not/no longer useful of little value over-simplistic poor problematic questionable redundant restricted time-consuming unanswered uncertain unclear uneconomic unfounded unlikely unnecessary unproven unrealistic unresolved unsatisfactory unsolved unsuccessful unsupported
 (to be) confi ned to (to) demand clarifi cation (to) disagree (to) fail to (to) fall short of (to) miscalculate (to) misjudge (to) misunderstand (to) need to re-examine (to) neglect (to) overlook (to) remain unstudied (to) require clarifi cation (to) suff er (from)
 few studies have... it is necessary to... little evidence is available little work has been done more work is needed there is growing concern there is an urgent need… this is not the case unfortunately
