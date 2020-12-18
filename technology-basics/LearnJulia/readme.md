@@ -24,7 +24,55 @@ Julia是计算科学方面很好用的比较新的编程语言，我是因为看
 
 然后阅读：[Julia 语言入门指引](https://discourse.juliacn.com/t/topic/159)，做个入门。
 
-新手第一步，下载安装。julia是跨平台语言，因为目前我这个repo是windows下Ubuntu里运行的，所以先在Ubuntu下下载安装。Julia有类似于Python下的anaconda的平台，直接使用这个即可：[juliapro](https://juliacomputing.com/products/juliapro.html)，使用这个要查看juliapro网页里给的文档。然后下载安装包（我下的时候版本是JuliaPro-1.5.0-1_build-113.sh file），进入网页的时候首先需要注册一下，按照要求做即可，下载之后，放到自己想要安装的文件夹下。
+新手第一步，下载安装。julia是跨平台语言，win, mac, linux都可以。
+
+## Windows10下安装
+
+主要参考：https://computationalthinking.mit.edu/Fall20/installation/
+
+第一步，直接去官网下载，点击安装，默认路径即可；
+
+然后打开Julia REPL（即刚安装好的Julia，菜单栏可看到），为了确保自己安装好了，输入1+1 试试看；
+
+然后安装Pluto，在Julia窗口下输入]，从Julia mode进入Pkg mode，然后输入 add Pluto，这需要等待一段时间；
+
+```Julia
+]
+add Pluto
+```
+
+这样就安装好了，可以关闭终端了，也可以直接按“Backspace”键回到Julia mode。
+
+接下来就可以打开Pluto看看了，打开Julia REPL。
+
+```Julia
+using Pluto
+Pluto.run()
+```
+
+这时候，默认的浏览器是chrome或者firefox，就能看到浏览器自动打开，进入Pluto.jl的欢迎页面。
+
+可以打开界面上给的样例，不过这里暂时以参考的课程为主，在下面的box里面输入：https://github.com/mitmath/18S191/blob/master/homework/homework0/hw0.jl
+
+然后打开即可看到一个julia notebook file的界面。
+
+现在可以将这个file保存到自己本地，比如我新建一个文件夹：C:\Users\11445\Documents\JuliaNotebook\MIT18S191 ，复制地址到notebook上方的box里面，再输入文件名，选择“Choose”键即可。可以看到提示要不要从默认存储的文件夹（C:\Users\11445\.julia\pluto_notebooks）移动到指定的文件夹，选择确认即可。
+
+然后就可以在文件夹中看到自己的文件了。
+
+可以将Julia配置到环境变量下，这样可以在终端下打开了，推荐使用Windows现代终端：https://aka.ms/terminal
+
+环境变量配置如下：
+
+1. 按 Windows Key + R, 输入 rundll32 sysdm.cpl,EditEnvironmentVariables ，确定即可看到环境变量；
+2. "用户变量" （或者 "系统变量" ）下, 找的 "Path" ，编辑；
+3. 新建一个path变量，把Julia位置粘贴进去，比如我的是C:\Users\11445\AppData\Local\Programs\Julia 1.5.3\bin.
+
+确定后即可在终端使用Julia了。
+
+## Ubuntu18.04下安装
+
+Julia有类似于Python下的anaconda的平台，直接使用这个即可：[juliapro](https://juliacomputing.com/products/juliapro.html)，使用这个要查看juliapro网页里给的文档。然后下载安装包（我下的时候版本是JuliaPro-1.5.0-1_build-113.sh file），进入网页的时候首先需要注册一下，按照要求做即可，下载之后，放到自己想要安装的文件夹下。
 
 接下来，给权限：
 

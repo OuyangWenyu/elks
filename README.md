@@ -25,7 +25,7 @@
 
 如果想在win10下尝试,可以先在win10下安装ubuntu,安装过程可参考:[Windows Subsystem for Linux Installation Guide for Windows 10](https://docs.microsoft.com/en-us/windows/wsl/install-win10)。
 
-安装成功之后，可以通过wsl.exe来使用，也可以使用mobaxterm软件来连接，硬盘挂载到/mnt/文件夹下，cd /mnt 即可进入硬盘。
+安装成功之后，可以通过wsl.exe来使用，也可以使用mobaxterm软件来连接，硬盘挂载到/mnt/文件夹下，cd /mnt可进入；home文件夹cd即可进入，不过在windows下，home可是藏得挺深的，应该在用户文件夹下的 \AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc\LocalState\rootfs\home ，大致上是这个文件夹，可能细节略有出入。
 
 win10里Ubuntu下miniconda的安装和环境配置可以参考：[Win10下Ubuntu(WSL)中Python环境配置笔记](https://zhuanlan.zhihu.com/p/63897033)
 windows下miniconda的安装和环境配置可以参考：[小白教程 | Miniconda安装及添加环境变量](https://mp.weixin.qq.com/s/yqyEknvYLIH5E0nMlWEDSQ?)
@@ -34,44 +34,49 @@ windows下miniconda的安装和环境配置可以参考：[小白教程 | Minico
 
 ```Shell
 # 进入你想要进入的文件夹位置
-cd /mnt/xxx
+cd
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-./Miniconda3-latest-Linux-x86_64.sh
-# 然后安装的时候选择你想要安装的位置，比如我的是：
-/mnt/d/Code/miniconda3
-# 接下来是否conda init，可以选择yes
+sudo sh Miniconda3-latest-Linux-x86_64.sh
+# 然后安装的时候选择你想要安装的位置，我直接默认安装了
+# 接下来是否conda init，可以选择yes，这样环境应该配置好了
 yes
-# 然后配置环境变量，vim /home/YOURNAME/.bashrc 我的用户名是owen，所以：
-vim /home/owen/.bashrc
+# 如果选择了no，则自己配置环境变量：
+vim ~/.bashrc
 # 然后将自己的miniconda安装环境写入，比如我的是：
-export PATH=/mnt/d/Code/miniconda3/bin:$PATH
+export PATH=/home/owen411/miniconda3/bin:$PATH
 # 保存后，执行：
-source /home/owen/.bashrc
+source ~/.bashrc
 # 下面语句可以查看自己的环境变量配置
 echo $PATH
 # 可以查看自己的conda 版本
 conda --version
+# 如果有权限问题，可以给自己权限，我的名字是owen411
+sudo chown -R owen411 miniconda3
 ```
 
-然后安装虚拟环境以及packages如下：
+然后安装虚拟环境：
 
 ```Shell
 # 进入本repo根目录，比如我的是：
-cd /mnt/d/Code/elks
-conda create --prefix ./envs python=3.7
+cd /mnt/e/Code/elks
+# 安装环境
+conda env create -f environment.yml
+```
+
+主要的packages如下：
+
+``` text
+python=3.7, jupyterlab, xeus-cling, earthpy, hydrofunctions, seaborn, scikit-learn, sympy, pytorch, torchvision, sphinx, sphinx-autobuild, sphinx_rtd_theme, recommonmark
+```
+
+安装时间较长，需要耐心等待，安装后：
+
+```Shell
 # 进入环境
-conda activate /mnt/d/Code/elks/envs
-# 如果是第一次执行conda activate,可能报错,执行conda init后,重启命令行即可
-conda install -c conda-forge jupyterlab, xeus-cling
-# 这里可以进入jupyter lab看看是否已有kernel，执行：
+conda activate elks
+# 打开jupyter
 jupyter lab
-# 然后命令中会出现地址，比如某一次运行我的地址是 http://127.0.0.1:8888/?token=ef73d758f3dd3ac0d8239f0df0231518a6af90ab2800598c
-# 复制粘贴入你win10下的浏览器即可访问了，然后在浏览器下继续当前操作
-# 进入当前环境
-conda activate /mnt/d/Code/elks/envs
-conda install -c conda-forge earthpy, hydrofunctions, seaborn, scikit-learn, sympy
-conda install pytorch torchvision cpuonly -c pytorch
-conda install -c conda-forge sphinx sphinx-autobuild sphinx_rtd_theme recommonmark
+# 注意如果看不到网址，可以按ctrl+c，然后按n不停止，这时候命令行界面就停在显示网址的位置了，将网址copy入win10下的浏览器即可打开jupyter
 ```
 
 ## 参与贡献
