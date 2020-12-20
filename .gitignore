@@ -940,3 +940,4 @@ buildNumber.properties
 /docs/build/
 /math-basics/equation/torchdiffeq/
 /math-basics/equation/NNET_MORE/
+*/.project

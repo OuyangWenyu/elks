@@ -190,7 +190,7 @@ $$S_t=S_{t-1}+(I_t-R_t)\triangle t$$
 
 ## An Operation-Based Scheme for a Multiyear and Multipurpose Reservoir to Enhance Macroscale Hydrologic Models （2012）
 
-SWAT模型中加入水库模块，出流的确定也是以给定天的多年平均值为基准的一个$\triangle O(i)$，这个值包括发电，供水和储水三个方面的竞争。三方面都依据当前水位和几个特征水位（汛限水位、发电临界水位、死水位等）之间的差别，结合各月release的多年平均，配合四个参数来计算的。
+这篇文章（Wu and Chen 2012）在SWAT模型中加入水库模块，出流的确定也是以给定天的多年平均值为基准的一个$\triangle O(i)$，这个值包括发电，供水和储水三个方面的竞争。三方面都依据当前水位和几个特征水位（汛限水位、发电临界水位、死水位等）之间的差别，结合各月release的多年平均，配合四个参数来计算的。
 
 最后的模拟结果表明，相比于SWAT内置的水库模块以及多元回归（Vi与 Vi-1和Ii之间的回归关系）方法，其方法在模拟时候表现更好，根据原文表2的描述，每年单独率定的参数（原文表3）在日尺度上模拟streamflow的NSE能达到0.36，而对比基准的两种方法分别是0.13和0.28
 
@@ -216,7 +216,7 @@ SWAT模型中加入水库模块，出流的确定也是以给定天的多年平�
 
 ## On an improved sub-regional water resources management representation for integration into earth system models (2013)
 
-这是一篇水库调度规则编入ESM （earth system model）相关的论文。主要目的是分析各种generic operating rules的水库模块的不确定性对于理解regulated径流、水库库容以及需水的影响。
+这是一篇水库调度规则编入ESM （earth system model）相关的论文（Voisin 2013）。主要目的是分析各种generic operating rules的水库模块的不确定性对于理解regulated径流、水库库容以及需水的影响。
 
 具体来说，包括：
 
@@ -255,7 +255,7 @@ WM中先从routing model里面的subnetwork取水，不能满足的话就从main
 
 ## Integrating a reservoir regulation scheme into a spatially distributed hydrological mode (2016)
 
-主要是讨论了如何将水库调度包含到一个分布式水文模型中。
+这篇文章（Zhao 2016）主要是讨论了如何将水库调度包含到一个分布式水文模型中。
 
 虽然水库的蒸发计算是基于面积的，但是水库还是表达在模型的一个grid cell中的，且在这篇文章用到的DHSVM模型中每个river segment只能有一个水库。考虑到DHSVM的高分辨率，river routing构建是用能包含多个grid cells的river segments的。
 
@@ -300,23 +300,55 @@ DHSVM模型是PNNL开发的：https://github.com/pnnl/DHSVM-PNNL
 
 ## A neural network based general reservoir operation scheme （2016）
 
-这篇文章在聚合水库data-driven分析方面给予了我们一些启示。
+这篇文章（Ehsani 2016）在聚合水库data-driven分析方面给予了我们一些启示。
 
 ## The impact of lake and reservoir parameterization on global streamflow simulation (2017)
 
-这篇文章也是在grid上对水库建模，嵌入到LISFLOOD模型中，LISFLOOD是一个半概念半物理模型，在其routing scheme的river channel里加入了湖泊和水库模块。湖泊直接结合weir equation和水量平衡公式等分析；水库基于水位控制的调度规则来模拟，因为缺少运行相关的数据，因此都是假设了一些参数，比如最小库容，normal storage和最大storage（这三个值是原文水库调度公式里面的三个量）都是按总库容的0.1，0.3和0.97来的；再比如最小，normal和non-damaging outflow假设为日自然径流的5%，30%和97th percentile。
+这篇文章（Zajac 2017）也是在grid上对水库建模，嵌入到LISFLOOD模型中，LISFLOOD是一个半概念半物理模型，在其routing scheme的river channel里加入了湖泊和水库模块。湖泊直接结合weir equation和水量平衡公式等分析；水库基于水位控制的调度规则来模拟，因为缺少运行相关的数据，因此都是假设了一些参数，比如最小库容，normal storage和最大storage（这三个值是原文水库调度公式里面的三个量）都是按总库容的0.1，0.3和0.97来的；再比如最小，normal和non-damaging outflow假设为日自然径流的5%，30%和97th percentile。
 
 其结果有分析加入lake和reservoir之后的影响，在全球390个湖泊和水库的分析中，加入水库能提高65%的流域径流预测（NSE提高值中位数为0.16），但也降低了28%的（NSE减少值中位数-0.09）。原因就包括由于缺少调度规则相关的特定知识而对水库参数的粗略估计带来的不确定性影响了径流预测性能，这也是将水库模块嵌入到水文模型中但性能并不优秀的一个重要原因。
 
 ## Deduction of reservoir operating rules for application in global hydrological models （2018）
 
-这篇文章是利用神经网络结合模糊规则ANFIS adaptive-network-based fuzzy inference system，在不同地区的11个水库上拟合了调度数据（linking inflow and storage with reservoir release）。结果发现，大水库调度更看水位，小水库则看流量。推求的规则能用来模拟水库出流，月尺度模拟的NSE平均值可以达到0.81；这时候Hanasaki的方法也能到0.42
+这篇文章（Coerver 2018）是利用神经网络结合模糊规则ANFIS adaptive-network-based fuzzy inference system，在不同地区的11个水库上拟合了调度数据（linking inflow and storage with reservoir release）。结果发现，大水库调度更看水位，小水库则看流量。推求的规则能用来模拟水库出流，月尺度模拟的NSE平均值可以达到0.81；这时候Hanasaki的方法也能到0.42
 
-## Modeling and simulating of reservoir operation using the artificial neural network, support vector regression, deep learning algorithm 
+## Modeling and simulating of reservoir operation using the artificial neural network, support vector regression, deep learning algorithm （2018）
 
 三个机器学习算法来模拟水库运行，不同时间尺度－－月／日／时，模拟30年的水库出流。
 
 在葛洲坝水库的实验结果显式水库调度过程是可以被拟合的，在所有时间尺度上都表现除了极好的效果，LSTM NSE值都能到0.999，同时ANN和SVR最好分别能到0.98，可能是因为葛洲坝是个径流式电站，基本上入流有了的话，出流也就很容易得到了。
+
+## WRF-Hydro Technical Description, (version 5.0) （2018）
+
+简单认识下WRF-Hydro的构成，其中是有reservoir routing module的。
+
+WRF-Hydro 主要由三部分组成，LSM + Terrain Routing + Channel & Reservoir Routing
+
+![](QQ截图20201220190428.png)
+
+首先是1D的LSM中计算垂直方向上的能量和水的通量即土壤热和水状态。是Grid的model，典型的空间分辨率是1-4km，较高分辨率的有30-100m。routing grid using a time-step weighted method and are passed to the subsurface and overland flow terrain-routing modules
+
+Then subsurface lateral flow in WRF-Hydro is calculated prior to the routing of overland flow to allow exfiltration from fully saturated grid cells to be added to the infiltration excess calculated from the LSM. 计算the lateral flow of saturated soil moisture 的方法是 DHSVM 模型中的方法，是水力学方法。
+
+Next, WRF-Hydro specifies the water table depth according the depth of the top of the saturated soil layer that is nearest to the surface.
+
+Then overland flow is defined.
+
+inflow into the stream network and lake and reservoir objects is a one-way process. Overland flow reaching grid cells identified as ‘channel’ grid cells pass a portion of the surface water in excess of the local ponded water retention depth to the channel model. 也就是说从land surface到stream和lake的inflow总是正的，也还没有从lake或channel回到landscape的计算。
+
+Channel flow in WRF-Hydro is represented by one of a few different user-selected methodologies described below. Water passing into and through lakes and reservoirs is routed using a simple level pool routing scheme.
+
+Baseflow to the stream network is represented using a conceptual catchment storage-discharge bucket model formulation which obtains “drainage” flow from the spatially-distributed landscape. Discharge from buckets is input directly into the stream using an empirically-derived storage-discharge relationship. 
+
+Land model方面，用地是Noah和Noah-MP LSMs，后者是前者的改进，暂时不详述了。
+
+The WRF-Hydro system has the ability to execute a number of physical process executions (e.g. column physics, routing processes, reservoir fluxes) on different spatial frameworks (e.g. regular grids, catchments, river channel vectors, reservoir polygons, etc). 这意味着不同spatial elements之间的spatial transformations 已经成为整个建模过程的关键部分。这里暂不深入。
+
+下面关注下 channel and lake routing。WRF-Hydro中有很多汇流模块，有gridded routing 的，有linled routing的：Gridded Routing using Diffusive Wave；Linked Routing using Muskingum and Muskingum-Cunge
+
+关于Lake和reservoir routing，A lake/reservoir or series of lakes/reservoirs are identified in the channel routing network, and lake/reservoir storage and outflow are estimated using a level-pool routing scheme. 湖和水库在WRF-Hydro中的区别是水库同时包括 orifice and weir outlets，而湖泊只有weirs。Weir flow is given as $Q_w (t)= C_wLh^{3/2}$；而Orifice flow是 $Q_0 (t)=C_0 O_a \sqrt {2gh}$ . Fluxes into a lake/reservoir object occur through the channel network and when surface overland flow intersects a lake object. Fluxes from lake/reservoir objects are made only through the channel network and no fluxes from lake/reservoir objects to the atmosphere or the land surface are currently represented (i.e. there is currently no lake evaporation or subsurface exchange between the land surface and lakes and reservoirs)
+
+![](QQ截图20201220193922.png)
 
 ## Representation and improved parameterization of reservoir operation in hydrological and land-surface models (2019)
 
@@ -326,7 +358,35 @@ DHSVM模型是PNNL开发的：https://github.com/pnnl/DHSVM-PNNL
 
 一是 Natural lake methods。这类方法是最简单的，即用lake的表达来表达水库，没有人为调度。release直接是水库库容的函数，参数取经验值。
 
-第二类是 inflow- and demand-based methods。考虑inflow和demand来确定release，参数化公式，这样没有数据的情况下，可以通过率定的方式处理。典型的比如上面 Wisser 2010的文章；Hanasaki 2006的文章；
+第二类是 inflow- and demand-based methods。考虑inflow和demand来确定release，参数化公式，这样没有数据的情况下，可以通过率定的方式处理。典型的比如上面 Wisser 2010的文章；Hanasaki 2006的文章；Voisin 2013的文章；
+
+第三是 Neural-network-based models，比如Coerver 2018的模糊神经网络以及Ehsani 2016的ANN；作者说缺点是 black-box，个人认为可以argue的是也许是不确定性分析的问题，因为原来的方法也没啥道理，都是从数据归纳的，只要约束加好，不确定性分析到，也没什么需要担心的；还有外延性问题，哪种方法外延性更好还尚未可知，尤其是deep learning能利用更多的case；所以可能需要的数据比较多才是一个主要的问题；
+
+第四是 Target storage-and-release-based 方法，也就是调度图那一类方法，比如 Wu and Chen 2012的文章；Zhao 2016的文章；Zajac 2017的文章。
+
+那这篇文章是第四类的，如下图所示。
+
+![](QQ截图20201220093433.png)
+
+基本上是一个调度图，作者称之为dynamically zoned target release (DZTR) model，参数有各个水位下的目标泄流，其确定有两种方式，一是generic的，参数是月尺度上的，根据每个水库历史各个月的streamflow的CDF，选择10%，45%，85%的值指定；二是有入流、出流这些数据时，根据具体水库率定的。
+
+然后作者将这一模型嵌入到MESH中，MSEH是一个加拿大的水文模型，是基于网格的模型系统，由三部分组成：
+
+- (1) the Canadian Land Surface Scheme (CLASS; Verseghy, 1991; Verseghy et al., 1993)
+- (2) lateral movement of surface (overland) runoff and subsurface water (interflow) to the channel system within a grid cell
+- (3) hydrological routing using WATROUTE from the WATFLOOD hydrological model
+
+目前这个模型中的水库模块还是比较简单的，有两种方式来考虑，其一直接提供水库泄流到模型输入中，这一过程称之为streamflow insertion，不过这样的话就没有办法预测未来情景，并且水量平衡没法保障，还有就是操作设置不连贯，尤其是梯级水库的时候会比较麻烦；其二，是natural lake的方式。这篇文章就是改进第二种方式，把DZTR嵌入到水文模型中。
+
+根据其结果，使用general的方式，对于90%的水库，相比于不加水库模块，release的NSE就能提高0.25以上。和另外两种调度模型相比（Hanasaki和Doll的）也表现更好。
+
+## The Community Land Model Version 5: Description of New Features, Benchmarking, and Impact of Forcing Uncertainty (2019)
+
+简单了解下CLM，可以看原文图1和图2简单认识下。
+
+首先其基本构成就很复杂，包括surface energy fluxes，Hydrology，Biogeochemical cycles等多部分。
+
+在GridCell上，又划分了Landunit，每个Landunit都有不同的column，每个column中又会有不同的patch。
 
 ## Investigating the impact of manmade reservoirs on large-scale hydrology and water resources using high-resolution modeling （2019）
 
@@ -507,13 +567,64 @@ $$S_{target}=S_0+\bar{i_m}*(1 year)-k_{rls}\bar{i_m}*(1 year)=S_0+\frac{C}{c}-\f
 
 在计算中，能率定的就率定R，不能率定的才使用公式。模拟中，梯级水库本来是上下游有影响的，要一次性全部计算下来，然后迭代计算更新参数比较好，但是这样就难以进行，所以就从上游到下游依次率定。一个水库的入流是由上游所有有大坝和没大坝河道出流的汇流结果，但是公式不是特别理解，因为有一个比例。
 
-然后是结果。
+然后是结果。结果上看，最好的一个水库的release 的相关系数也只到0.61
 
 ## On the representation of water reservoir storage and operations in large-scale hydrological models: implications on model parameterization and climate change impact assessments （2019）
 
+这篇文章还是蛮有趣的，论文发现，在VIC中无论嵌不嵌入水库模块，最后都能很好地模拟（在1996-2005年范围内率定和验证）有水库影响的径流，但是在不同气候模式下（CMIP5 climate project 2050-2060情形下），可以看到结果的统计指标（最大最小平均月径流）会有一定差异。
+
+研究流域是湄公河，水库模块采用的是水位控制的调度图形式的。每日的目标水位需要提前设置调度规则确定，调度规则的设定来自于另一篇文章（https://doi.org/10.1061/(ASCE)WR.1943-5452.0000286） ，这里就不赘述了，总之是划定了一条目标水位线，有了几条目标水位线，就把水库水位分区了，每个分区都对应不同的调度函数。
+
+![](QQ截图20201220105123.png)
+
+![](QQ截图20201220105135.png)
+
+比如，If the level is between the dead water and target level (Zone 2), the model first uses the information on the incoming daily inflow to solve a mass balance equation, in which the discharge from the dam is kept at zero. The aim is to understand whether the water level is expected to go beyond the target at the end of the day. If that is the case, the model discharges through the turbines the amount of water needed to **keep the level close to the target**. Otherwise, the turbines are not activated.
+
+最后，模拟结果显示NSE的值范围在0.68–0.79之间。且有没有水库模块都能到这个范围，但是VIC的参数表达却是不同的，也就是说在没有水库的时候，VIC参数调整能起到相应的作用。
+
+![](QQ截图20201220105716.png)
+
+在气候模式情景下的模拟也能说明问题。
+
 ## Real-time reservoir operation using recurrent neural networks and inflow forecast from a distributed hydrological model （2019）
+
+这篇论文最终的目的不是水库嵌入水文模块，是用水文模型的预报做了水库的输入来预测更长时间的水库行为。重点是，用RNN能模拟水库的行为。在三个水库上模拟的结果显示，LSTM预测的NSE能达到0.85，0.93和0.66 （对不同水库分别调优，用不同超参数的结果）。
 
 ## Comparison of generalized non-data-driven lake and reservoir routing models for global-scale hydrologic forecasting of reservoir outflow at diurnal time steps （2020）
 
+这篇文章没有开发新的方法，是在水库的全美60个水库上检验了Doll 2003和Hanasaki 2006的方法.
+
+Doll的方法是一个简单的水库下泄方法：
+
+![](QQ截图20201220111743.png)
+
+但是结果相比与Hanasaki的方法要更好。根据原文图2，几乎所有的H06方法模拟结果都和inflow最后的效果相差不多，而D03的方法绝大多数都能促进模拟出流的改善。
+
 ## An experiment on reservoir representation schemes to improve hydrologic prediction: coupling the national water model with the HEC-ResSim （2020）
 
+这篇文章将NWM和Hec-ResSim进行了耦合，并使用了两种水库表达的scheme，一是水库调度的模拟，二是计划安排好的调度方案。
+
+在NWM中，lakes和reservoirs都是用一个level pool routing scheme表示的，文章中称为NWL-LP，它是没怎么考虑水库调度的。
+
+Hec-ResSim是用来做水库调度的，模拟防洪，供水等水库调度，其支持多种rouing model，包括马斯京根等，在水库方面使用调度规则和调度图来表示以模拟水库出流。
+
+具体来说，有两种水库表示框架：
+
+- （1）基于调度规则和调度图的出流模拟（operation rules and guide rules）
+- （2）基于调度人员计划好的出流（scheduled release）
+
+其中，scheduled release 来自不同的机构，这些机构将他们预期的release发布在California Data Exchange Center（CDEC）上。CDEC存储，处理并汇总来自多个机构的实时水文数据到一个统一的数据库。机构包括：NWS, USACE, USBoR, USGS, 加州的一些水资源管理机构。数据交换中心CDEC收集的水文数据使预报和调度人员能够根据公布的release schedules准备洪水、供水和水电预报。这篇文章是手动从CDEC获取release information来输入到NWM-ResSim中。
+
+最后，文章中实现的水库的scheme有四种：
+
+- NWM-LP：NWM自带的
+- GC-1：两个调度图之一，来自USACE
+- GC-2：两个调度图之一，基于GC-1修正的，在模拟期间基于调度图和观测水位修正。
+- CDEC：scheduled release，不是模拟的，而是来自USACE和SCWA
+
+![](QQ截图20201220152117.png)
+
+简单说明：文章研究对象是加州Russian River basin以及COY大坝的Lake Mendocino水库，流域在Mendocino和Sonoma counties之间。干流控制点是USGS的11462500站点。Mendocino水库是多目标水库，提供防洪和下游城市和农业的供水以及最小生态径流的作用。COY大坝是由USACE维护，USACE负责防洪调度，Sonoma Water（SCWA）负责下游水利需求。这些机构把他们的anticipated release发布到CDEC 数据库上。调度规则就是经典的调度图，水库划区为三，分别是emergency， flood control和conservation。conservation之下就是死库容。具体的调度规则由USACE指定。
+
+看含水库模块之后水库出流，下游两个关键节点的径流模拟结果。图8展示了不同调度模式下的18场次降雨径流过程下的水库入流出流的模拟结果，可以看到除了CDEC，其他的NSE都为负数。即便是CDEC，在最下游的站点径流模拟中，NSE平均值也是负数。
