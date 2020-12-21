@@ -7,4 +7,4 @@
 
 那我个人的使用经验是这样的，有些VPN网站需要先翻墙才能访问，所以可以先从免费简易的VPN软件开始，这方面推荐 [XX-Net](https://github.com/XX-net/XX-Net) 和 [Lantern](https://github.com/getlantern/lantern)，这两个软件也都有付费版可以使用。
 
-另外想要更稳定的还是参考上面 墙妈妈 网站的推荐，我使用的是 [ExpressVPN](https://www.expressvpn.com/support/vpn-setup/app-for-linux/#install)，一年100刀，有些贵但是相对更好用一些。其他的还有 [重生云加速](http://www.rebirthcloud.net/) 可以考虑。
+另外想要更稳定的还是参考上面 墙妈妈 网站的推荐，我使用的是 [ExpressVPN](https://www.expressvpn.com/support/vpn-setup/app-for-linux/#install)，一年100刀，有些贵但是相对更好用一些。

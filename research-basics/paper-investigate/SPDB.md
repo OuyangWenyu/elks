@@ -1,33 +1,60 @@
 # Streamflow Prediction in Dammed Basins (SPDB)
 
-按刊出时间顺序，简单记录一些 SPDB 相关的文献要点。
+按刊出时间顺序，简单记录一些 SPDB 相关的文献要点，以下是部分文章的结果小结。
+
+Hanasaki et al. (2006)：no NSE, The results of this paper consist of two parts: one is for individual reservoir simulation, and the paper showed the performance of simulated releases for 18 in 28 reservoirs were better when using the operation schems in this paper; the other is for global reservoir simulation, which was tested on discharges of 84 river gauge stations. The 2-year simulation results showed no improvement for global simulation.
+Payan et al. (2008): they used NSE of sqrt{Q} as their criterion, the mean NSq rises from 0.679 to 0.707 from ignoring storage information to considering those;
+Wu and Chen (2012): https://doi.org/10.1175/JHM-D-10-05028.1 ; 
+Zhang et al. (2012): https://doi.org/10.5194/hess-16-4033-2012 ;
+Viosin et al. (2013);
+Ehsani et al. (2016);
+Zhao (2016): https://doi.org/10.1016/j.advwatres.2016.10.014 ;
+Zajac (2017): http://dx.doi.org/10.1016/j.jhydrol.2017.03.022 ;
+Coerver et al. (2018): https://doi.org/10.5194/hess-22-831-2018 ;
+Shin et al. (2019);
+Yassin et al. (2019);
+Dang (2020): https://doi.org/10.5194/hess-24-397-2020 ;
+Kim et al. (2020).
 
 ## An Operation-Based Scheme for a Multiyear and Multipurpose Reservoir to Enhance Macroscale Hydrologic Models （2006）
 
-这是这个领域很重要的一篇文章（Hanasaki 2006）。
+这是这个领域很重要的一篇文章（Hanasaki 2006）。其目的也是把水库调度模块加入到routing model中更好地表达水文过程，进一步分析水库对径流的影响。
 
-核心是对水库调度的规则性概化。三步：
+数据上，在28个有入流、库容、出流数据的水库上实验分析。
+
+方法上，核心是对水库调度的规则性概化。三步：
 
 首先定义一个下泄系数，
-$$k_{rls}=\frac{S_0}{\alpha C}$$
+$$k_{rls,y}=\frac{S_{first,y}}{\alpha C}$$
 它可以表达每个调度年之间的变化性。基本的逻辑是这样的，一年的总供水量很大程度上取决于初库容以及长期目标需水，长期目标水量用库容乘以一个系数表达，所以可以得到上式。
 
 那么早期的关于第y年总release的初步假设值可以设为：
-$$R_y \approx k_{rls} * \bar {i_m}$$
+$$R_y \approx k_{rls,y} * i_{mean}$$
 
-然后给出一个临时的月下泄值：
-$$ r_m' = \bar {i_m}+d_m - \bar {d_m} \ \ \ \ \ \  \ \ \ \ \ \   \ \ \ \ \ \    if DPI<1-M$$
-$$r_m' = \bar {i_m}(M+(1-M)d_m / \bar {d_m}) \ \ \ \ \ \  otherwise$$
+然后给出一个临时的月下泄值，但是对irrigation水库和non-irrigation的处理不同。
 
-其中，DPI是年均需水和年均径流的比值，M是最小月下泄和年均径流的比值。
+non-irrigation的比较简单，认为其不具备月际变化，所以直接把年均径流拿来用
+$$r_{m,y}'=i_{mean}$$
 
-这里的基本逻辑是对于需水相对不多的情况，即第一个公式，使用均值分配的方式初步分摊到各个月体现月内差异。对于第二个公式，对应的是需水相对较大的情况，应该使用一种类似hedging 的方式，可以看到$d_m$的系数，计算下为$(1-M)\frac{\bar {i_m}}{\bar {d_m}}$，是小于1的，也就是分配到的需水并不都满足。
+对于irrigation的：
+$$r_{m,y}' = \frac{i_{mean}}{2}*(\frac{\sum _{area}[k_{alc}*(d_{irg,m,y}+d_{ind}+d_{dom})]}{d_{mean}}) \ \ \ \ \ if\ d_{mean}\geq 0.5* i_{mean}$$
+$$r_{m,y}' = i_{mean}+\sum{area}[k_{alc}*(d_{irg,m,y}+d_{ind}+d_{dom})]-d_{mean} \ \ \ \ \ \  otherwise$$
+$$d_{mean}=\sum _{area}[k_{alc}*(d_{irg,mean}+d_{ind}+d_{dom})]$$
+
+这里的基本逻辑是对于需水相对不多的情况，使用均值分配的方式初步分摊到各个月体现月内差异。对于需水相对较大的情况，应该使用一种类似hedging 的方式，可以看到$d_{mean}$的系数，计算下是小于1的，也就是分配到的需水并不都满足。
 
 最后目标月下泄可以由下式计算：
-$$r_m=Rk_{rls}r_m'+(1-R)i_m$$
-这一部分主要是再考虑库容 来最后定义月下泄。库容够大，即R=1，那么可以直接将初估的下泄乘以下泄系数即可，就如开始初设的年总下泄那样。当R<1时，可以计算下，即$r_m=Rk_{rls}[(1-M)\frac{\bar {i_m}}{\bar {d_m}}d_m+M\bar{i_m}]+(1-R)i_m$，可以看出还是一个关于demand的线性函数，系数还是小于等于1的，所以这里可以看到对应一种二点hedging。
+$$r_{m,y}=k_{rls,y}*r_{m,y}' (c\geq 0.5)$$
+$$r_{m,y} = (\frac{c}{0.5})^2 * k_{rls,y} * r_{m,y}'+[1-(\frac c {0.5})^2]i_{m,y} (otherwise)$$
+这一部分主要是再考虑库容 来最后定义月下泄。库容系数c大，那么可以直接将初估的下泄乘以下泄系数即可，就如开始初设的年总下泄那样。库容系数小的时候可以看到类似hedging。
 
 这三步公式的形式应该是作者根据数据反推出来的，总之，现在已经成为了很多研究的引用基础。
+
+在结果方面，没有给出太多具体的性能指标，更多的是比较RMSE。
+
+首先对水库的模拟，在28个水库上，比较了有无水库以及不同水库模式模拟的RMSE的差异。文章给出的模式和其他更简单的水库模式或者无水库模式相比，在28个里面的18个都是最小的RMSE，25个是比无水库和natural lake模块都要好的。
+
+在global reservoir simulation，整体径流模拟方面，如图11综合比较了全球84个径流站点的在有无水库模拟条件下的结果，结果显示，总体上看并没有明显地让径流模拟更好，但是模拟只有两年，所以结果也不能轻易得出。
 
 ## Calibrating a watershed simulation model involving human interference (2007)
 
@@ -231,7 +258,7 @@ $$S_t=S_{t-1}+(I_t-R_t)\triangle t$$
 
 WM中先从routing model里面的subnetwork取水，不能满足的话就从main channel取水（至少要留50%），还没完全满足，再从水库取水（可以取水的水库由一个数据库指定 demand portioning），从多个水库取水的时候，按库容比例分配。反过来对一个水库，如果不同的subbasins都对他有需水，那么根据另一个数据库（一个水库可供应的流域 dependency database），按subbasin需水的比例实际分配给各个子流域。也就是说，这块有个小小的交互，先是流域要水，然后水库了解后，分配供水。这个模块是offline的运行的，所以是一遍交互，应该没有更多的循环。
 
-对水库，有了实际的demand，结合调度规则就可以给出过程了。调度规则是Hanasaki那一套，第一步是用年均径流做pre-release；第二步用月均径流和需水来修改pre-release；第三步用一个水库相关的系数来修改获得最终release。后面谈到的irrigation还是flood control对调度规则的改变，改变的都是这几步的公式里涉及的变量；还有i选择自然径流还是调节径流的均值以及demand选择withdraw还是consumption，改变的也都是这些公式，作者总结了一个表3可以看到所有改变。
+对水库，有了实际的demand，结合调度规则就可以给出过程了。调度规则是Hanasaki那一套，第一步是用年均径流做pre-release；第二步用月均径流和需水来修改pre-release；第三步用一个水库相关的系数来修改获得最终release。后面谈到的irrigation还是flood control对调度规则的改变，改变的都是这几步的公式里涉及的变量；还有i选择自然径流还是调节径流的均值以及demand选择withdraw还是consumption，改变的也都是这些公式，作者总结了一个表3可以看到所有改变。稍微具体来说，就是改变原文式（1）（2）中的 $i_{mean}$（年平均径流）, $d_{mean,m}$（月平均需水）, $d_{mean}$（年平均需水），比如
 
 水文模型的评价基于模拟的natural flow和观测值之间的error；整体模型评价是基于模拟的regulated flow和reservoir storages与观测值之间的误差，此外还评价了观测的consumptive demand被满足的程度。
 
@@ -569,7 +596,11 @@ $$S_{target}=S_0+\bar{i_m}*(1 year)-k_{rls}\bar{i_m}*(1 year)=S_0+\frac{C}{c}-\f
 
 然后是结果。结果上看，最好的一个水库的release 的相关系数也只到0.61
 
-## On the representation of water reservoir storage and operations in large-scale hydrological models: implications on model parameterization and climate change impact assessments （2019）
+## Real-time reservoir operation using recurrent neural networks and inflow forecast from a distributed hydrological model （2019）
+
+这篇论文最终的目的不是水库嵌入水文模块，是用水文模型的预报做了水库的输入来预测更长时间的水库行为。重点是，用RNN能模拟水库的行为。在三个水库上模拟的结果显示，LSTM预测的NSE能达到0.85，0.93和0.66 （对不同水库分别调优，用不同超参数的结果）。
+
+## On the representation of water reservoir storage and operations in large-scale hydrological models: implications on model parameterization and climate change impact assessments （2020）
 
 这篇文章还是蛮有趣的，论文发现，在VIC中无论嵌不嵌入水库模块，最后都能很好地模拟（在1996-2005年范围内率定和验证）有水库影响的径流，但是在不同气候模式下（CMIP5 climate project 2050-2060情形下），可以看到结果的统计指标（最大最小平均月径流）会有一定差异。
 
@@ -586,10 +617,6 @@ $$S_{target}=S_0+\bar{i_m}*(1 year)-k_{rls}\bar{i_m}*(1 year)=S_0+\frac{C}{c}-\f
 ![](QQ截图20201220105716.png)
 
 在气候模式情景下的模拟也能说明问题。
-
-## Real-time reservoir operation using recurrent neural networks and inflow forecast from a distributed hydrological model （2019）
-
-这篇论文最终的目的不是水库嵌入水文模块，是用水文模型的预报做了水库的输入来预测更长时间的水库行为。重点是，用RNN能模拟水库的行为。在三个水库上模拟的结果显示，LSTM预测的NSE能达到0.85，0.93和0.66 （对不同水库分别调优，用不同超参数的结果）。
 
 ## Comparison of generalized non-data-driven lake and reservoir routing models for global-scale hydrologic forecasting of reservoir outflow at diurnal time steps （2020）
 
