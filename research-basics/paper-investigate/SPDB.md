@@ -2,19 +2,21 @@
 
 按刊出时间顺序，简单记录一些 SPDB 相关的文献要点，以下是部分文章的结果小结。
 
-Hanasaki et al. (2006)：no NSE, The results of this paper consist of two parts: one is for individual reservoir simulation, and the paper showed the performance of simulated releases for 18 in 28 reservoirs were better when using the operation schems in this paper; the other is for global reservoir simulation, which was tested on discharges of 84 river gauge stations. The 2-year simulation results showed no improvement for global simulation.
-Payan et al. (2008): they used NSE of sqrt{Q} as their criterion, the mean NSq rises from 0.679 to 0.707 from ignoring storage information to considering those;
-Wu and Chen (2012): https://doi.org/10.1175/JHM-D-10-05028.1 ; 
-Zhang et al. (2012): https://doi.org/10.5194/hess-16-4033-2012 ;
-Viosin et al. (2013);
-Ehsani et al. (2016);
-Zhao (2016): https://doi.org/10.1016/j.advwatres.2016.10.014 ;
-Zajac (2017): http://dx.doi.org/10.1016/j.jhydrol.2017.03.022 ;
-Coerver et al. (2018): https://doi.org/10.5194/hess-22-831-2018 ;
-Shin et al. (2019);
-Yassin et al. (2019);
-Dang (2020): https://doi.org/10.5194/hess-24-397-2020 ;
-Kim et al. (2020).
+- Hanasaki et al. (2006)：no NSE, The results of this paper consist of two parts: one is for individual reservoir simulation, and the paper showed the performance of simulated releases for 18 in 28 reservoirs were better when using the operation schems in this paper; the other is for global reservoir simulation, which was tested on discharges of 84 river gauge stations. The 2-year simulation results showed no improvement for global simulation.
+- Payan et al. (2008): they used NSE of sqrt{Q} as their criterion, the mean NSq rises from 0.679 to 0.707 from ignoring storage information to considering those;
+- Wu and Chen (2012): https://doi.org/10.1175/JHM-D-10-05028.1 The authors developed a reservoir operation scheme to decide outflow and its distribution on hydropower, water supply and impoundment purposes according to the inflow and storage, calibrated the coefficients of equations in the new scheme during 1965-1984 and validated the scheme in the period 1987-1988 for the xinfengjiang reservoir in the East River basin in southern China. The results showed the NSE of outflow could reach 0.36, while the NSE values of the two baselinw schemes were 0.13 and 0.21. One baseline scheme is the original SWAT reservoir module and the other is multilinear regression between storage variation and storage, inflow.
+- Zhang et al. (2012): https://doi.org/10.5194/hess-16-4033-2012  The authors modified the original SWAT reservoir module by using Landsat, an empirical storage classification method, and  empirical reservoir/ponds storage-release relationships to estimate water storage and release for the flow detention and regulation facilities with various sizes. The results showed that the improved SWAT model more accurately modeled small- and medium-sized storages than the original model when reproducing streamflows in the Fengman watershed in northeastern China,  improveing NSE values from 0.814 to 0.855, 0.656 to 0.841, 0.864 to 0.885, and 0.822 to 0.941 for four hydrologic stations;
+- Viosin et al. (2013): The authors used different predictors and reservoir operation priorities to modify the equations of reservoir schemes in Hanasaki (2006). For simulated 1983/10 to 1999/09 monthly regulated flow, the best performance shown in this paper was a NSE of 0.62 for the Dalles location in the outlet of the columbia river basin, while NSEs of the other two locations are still negative;
+- Ehsani et al. (2016): The authors used artificial neural networks to map the general relationships between daily release and daily reservoir storage volume, three consecutive days of inflow, and release in the past 2 days. Based on experiments for 12 dams, the average Nash efficiency coefficient for simulation of a daily reservoir release time series could reach a high value of 0.86;
+- Zhao (2016): https://doi.org/10.1016/j.advwatres.2016.10.014 In this paper, a multi-purpose reservoir module with predefined complex operational rules was integrated into the Distributed Hydrology Soil Vegetation Model (DHSVM). Conditional operating rules, which are designed to reduce flood risk and enhance water supply reliability, were adopted in this module. The performance of the integrated model was tested over the upper Brazos River Basin in Texas, where two U.S. Army Corps of Engineers managed reservoirs, Lake Whitney and Aquilla Lake, are located. The integrated model was calibrated and validated using observed reservoir inflow, outflow, and storage data. The error statistics were summarized for both reservoirs on a daily, weekly, and monthly basis: the Nash-Sutcliff Efficiency (NSE) of releases were 0.74, 0.81 and 0.92 for Lake Whitney and 0.51, 0.51 and 0.63 for Aquilla Lake;
+- Zajac (2017): http://dx.doi.org/10.1016/j.jhydrol.2017.03.022 The authors estimated the effect of lakes and reservoirs on global daily streamflow simulations of a spatially distributed LISFLOOD hydrological model. With lakes and reservoirs, the NSE values of simulated daily streamflow for 390 stations during 1980-2013 were improved for 65% of the catchments with a median improvement of 0.16. The best NSE value shown in this paper occured in Norilka At Valek station, the value could reach 0.61 when integrating lakes and reservoirs modules;
+- Coerver et al. (2018): https://doi.org/10.5194/hess-22-831-2018 In this paper, using an artificial neural network capable of mimicking fuzzy logic, called the adaptive-network-based fuzzy inference system (ANFIS), fuzzy rules linking inflow and storage with reservoir release were determined for 11 reservoirs in central Asia, the US and Vietnam. The derived rules were used to simulate reservoir monthly release with an average NSE of 0.81;
+- Shin et al. (2019): the authors enhanced the generic reservoir operation scheme of Hanasaki et al. (2006) in the routing scheme of a hydrologic model, and developed a high‐resolution continental‐scale reservoir scheme for storage and release dynamics which could improve simulations. This scheme has made great progress in analyzing the impacts of dams on river discharge over the conterminous United States (CONUS), and obtained a correlation of 0.61 about reservoir release between observations and predictions for a reservoir in the Sacramento river;
+- Yassin et al. (2019): the authors developed a general parametric reservoir operation model based on piecewise-linear relationships between reservoir storage, inflow, and release to approximate actual reservoir operations. This was built into a land surface model, which was tested in 37 reservoirs across the globe. Results showed the NSE for daily or monthly release flow was greater than 0.25 and 0.5 for 90% and 50% of reservoirs with generalized parameters, respectively, while models with no-reservoir assupmtion resulted in NSE values of greater than 0.25 and 0.5 for 45% and 30% of reservoirs, respectively. The proposed model in this paper has some parameters that can vary for different times of the year. When inflow, storage variation and release data are all avialible, these parameters could be calibrated to fit the target variables. Relative to the generalized solution, calibrated parameters improved NSE flow for all reservoirs, with a median improvement of 0.11; 
+- Dang et al. (2020): https://doi.org/10.5194/hess-24-397-2020 The authors provided a novel variant of VIC’s routing model to simulate the storage dynamics of water reservoirs. Using the upper Mekong river basin as a case study, they calibrate the instance of VIC with reservoirs over the period 1996–2005 and show that the model has a NSE range of 0.68-0.79 for reproducing daily discharges in this period.
+- Kim et al. (2020): The authors developed an integrated water management model, NWM-ResSim, by coupling the NWM with HEC-ResSim, and two reservoir representation schemes are tested: simulation of reservoir operations and retrieval of scheduled operations. The experiments focus on a pilot reservoir domain in the Russian River basin – Lake Mendocino, California – and its contributing watershed. The reservoir representation schemes are evaluated for the 2016/17 wet season. Simulated monthly reservoir outflows by scheduled operations of the coupled model could produce positive NSE for all locations (not concrete values are shown).
+- Turner et al. (2020): 
+
 
 ## An Operation-Based Scheme for a Multiyear and Multipurpose Reservoir to Enhance Macroscale Hydrologic Models （2006）
 
@@ -218,8 +220,14 @@ $$S_t=S_{t-1}+(I_t-R_t)\triangle t$$
 ## An Operation-Based Scheme for a Multiyear and Multipurpose Reservoir to Enhance Macroscale Hydrologic Models （2012）
 
 这篇文章（Wu and Chen 2012）在SWAT模型中加入水库模块，出流的确定也是以给定天的多年平均值为基准的一个$\triangle O(i)$，这个值包括发电，供水和储水三个方面的竞争。三方面都依据当前水位和几个特征水位（汛限水位、发电临界水位、死水位等）之间的差别，结合各月release的多年平均，配合四个参数来计算的。
+$$\triangle O(i)=[\alpha \eta _{pow}(i) + \beta \eta _{sup}(i) + \gamma \eta _{imp}(i)]k(mon)\bar O (i)$$
+其中，k代表的是多目标之间的权衡。几个$\eta$值是表示在当前水位或来流条件下计算对应调度目标出流值比例，比如：
+$$\eta _{pow}(i)=\frac{V(i)-V_c}{max(V_p-V_c,V_c-V_d)}$$
+其中，V(i)是当前库容，$V_c, V_p, V_d$是critical level（发电）、flood control level（防洪）、dead level（死水位）对应库容。
 
-最后的模拟结果表明，相比于SWAT内置的水库模块以及多元回归（Vi与 Vi-1和Ii之间的回归关系）方法，其方法在模拟时候表现更好，根据原文表2的描述，每年单独率定的参数（原文表3）在日尺度上模拟streamflow的NSE能达到0.36，而对比基准的两种方法分别是0.13和0.28
+模型在1965-1984年数据上率定，率定时候用的是SWAT模拟的inflow和观测的水库日storage和outflow，算法是shuffled complex evolution，在1987-1988年数据上验证。
+
+最后的模拟结果表明，相比于SWAT内置的水库模块（原文scheme I）以及多元回归（Vi与 Vi-1和Ii之间的回归关系 $\triangle V(i) = (a+b) V(i-1)+cI(i)$，原文scheme II）方法，其方法（scheme III）在模拟时候表现更好，根据原文表2的描述，每年单独率定的参数（原文表3）在日尺度上模拟streamflow的NSE能达到0.36，所有年份数据一起率定的参数对应NSE为0.28，而对比基准的两种方法分别是0.13和0.21
 
 ## Integrated hydrological modelling of small- and medium-sized water storages with application to the upper Fengman Reservoir Basin of China （2012） 
 
@@ -654,4 +662,12 @@ Hec-ResSim是用来做水库调度的，模拟防洪，供水等水库调度，�
 
 简单说明：文章研究对象是加州Russian River basin以及COY大坝的Lake Mendocino水库，流域在Mendocino和Sonoma counties之间。干流控制点是USGS的11462500站点。Mendocino水库是多目标水库，提供防洪和下游城市和农业的供水以及最小生态径流的作用。COY大坝是由USACE维护，USACE负责防洪调度，Sonoma Water（SCWA）负责下游水利需求。这些机构把他们的anticipated release发布到CDEC 数据库上。调度规则就是经典的调度图，水库划区为三，分别是emergency， flood control和conservation。conservation之下就是死库容。具体的调度规则由USACE指定。
 
-看含水库模块之后水库出流，下游两个关键节点的径流模拟结果。图8展示了不同调度模式下的18场次降雨径流过程下的水库入流出流的模拟结果，可以看到除了CDEC，其他的NSE都为负数。即便是CDEC，在最下游的站点径流模拟中，NSE平均值也是负数。
+看含水库模块之后水库出流，下游两个关键节点的径流模拟结果。
+
+图7是日径流模拟的月尺度统计，结果还可以，scheduled operation modules下，NSE在几个locations上还都是能为正值的。
+
+图8展示了不同调度模式下的18场次降雨径流过程下的水库入流出流的模拟结果，可以看到除了CDEC，其他的NSE都为负数。即便是CDEC，在最下游的站点径流模拟中，NSE平均值也是负数。不过这是sub-daily尺度的结果了。
+
+## Data‐Driven Reservoir Simulation in a Large‐Scale Hydrological and Water Resource Model (2020)
+
+
