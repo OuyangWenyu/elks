@@ -15,16 +15,12 @@
 - Yassin et al. (2019): the authors developed a general parametric reservoir operation model based on piecewise-linear relationships between reservoir storage, inflow, and release to approximate actual reservoir operations. This was built into a land surface model, which was tested in 37 reservoirs across the globe. Results showed the NSE for daily or monthly release flow was greater than 0.25 and 0.5 for 90% and 50% of reservoirs with generalized parameters, respectively, while models with no-reservoir assupmtion resulted in NSE values of greater than 0.25 and 0.5 for 45% and 30% of reservoirs, respectively. The proposed model in this paper has some parameters that can vary for different times of the year. When inflow, storage variation and release data are all avialible, these parameters could be calibrated to fit the target variables. Relative to the generalized solution, calibrated parameters improved NSE flow for all reservoirs, with a median improvement of 0.11; 
 - Dang et al. (2020): https://doi.org/10.5194/hess-24-397-2020 The authors provided a novel variant of VIC’s routing model to simulate the storage dynamics of water reservoirs. Using the upper Mekong river basin as a case study, they calibrate the instance of VIC with reservoirs over the period 1996–2005 and show that the model has a NSE range of 0.68-0.79 for reproducing daily discharges in this period.
 - Kim et al. (2020): The authors developed an integrated water management model, NWM-ResSim, by coupling the NWM with HEC-ResSim, and two reservoir representation schemes are tested: simulation of reservoir operations and retrieval of scheduled operations. The experiments focus on a pilot reservoir domain in the Russian River basin – Lake Mendocino, California – and its contributing watershed. The reservoir representation schemes are evaluated for the 2016/17 wet season. Simulated monthly reservoir outflows by scheduled operations of the coupled model could produce positive NSE for all locations (not concrete values are shown).
-- Turner et al. (2020): 
-
 
 ## An Operation-Based Scheme for a Multiyear and Multipurpose Reservoir to Enhance Macroscale Hydrologic Models （2006）
 
-这是这个领域很重要的一篇文章（Hanasaki 2006）。其目的也是把水库调度模块加入到routing model中更好地表达水文过程，进一步分析水库对径流的影响。
+这是这个领域很重要的一篇文章（Hanasaki 2006）。其目的也是把水库调度模块加入到routing model中更好地表达水文过程，进一步分析水库对径流的影响。考虑了全球452个水库，把它们放进了TRIP模型（一个全球河流汇流模型）的河网中。空间分辨率1度，时间是月尺度模拟。使用的输入有runoff数据，来自一个10天1度时空分辨率的水文模型JMA-SiB的结果。取水数据包括灌溉和非灌溉取水，前者是使用CROPWAT模型计算的结果，后者来自一篇文章0.5度月尺度数据。有28个水库的日或者月尺度的库容、入流、和泄流数据用来验证模拟结果。
 
-数据上，在28个有入流、库容、出流数据的水库上实验分析。
-
-方法上，核心是对水库调度的规则性概化。三步：
+水库模型本身的方法核心是对水库调度的规则性概化。三步：
 
 首先定义一个下泄系数，
 $$k_{rls,y}=\frac{S_{first,y}}{\alpha C}$$
@@ -52,11 +48,27 @@ $$r_{m,y} = (\frac{c}{0.5})^2 * k_{rls,y} * r_{m,y}'+[1-(\frac c {0.5})^2]i_{m,y
 
 这三步公式的形式应该是作者根据数据反推出来的，总之，现在已经成为了很多研究的引用基础。
 
-在结果方面，没有给出太多具体的性能指标，更多的是比较RMSE。
+模拟方面。首先对水库的模拟，在28个有数据的水库上，以观测的月入流和初始库容为输入，根据上述模型计算出流和库容。
 
-首先对水库的模拟，在28个水库上，比较了有无水库以及不同水库模式模拟的RMSE的差异。文章给出的模式和其他更简单的水库模式或者无水库模式相比，在28个里面的18个都是最小的RMSE，25个是比无水库和natural lake模块都要好的。
+在global reservoir simulation，整体径流模拟方面，首先不考虑水库模块，启动global 模型，迭代输入global runoff field直到initial river channel storage达到equilibrium（没有太明白啥意思！！！需补充）。然后使用水库调度模块，再迭代输入global runoff field知道initial reservoir storage 达到equilibrium。接着就可以执行全模拟了。TRIP用来将每个网格的runoff 从headwater汇流到sea。当遇到有水库的grid，就从标准的汇流模块切换到水库模块。整个过程相当于是online（这个词在不同文章中意思应该有所区别，这里以Turner et al. 2020的文章中的意思为主）的。最后，使用Global River Discharge Center的数据来评价84个站点的RMSE，不过文章主要比较了有水库模拟和无水库模拟两种情况下RMSE的差别，并没有给出具体的数据，更多地是分析有无水库模拟对径流模拟的影响。
 
-在global reservoir simulation，整体径流模拟方面，如图11综合比较了全球84个径流站点的在有无水库模拟条件下的结果，结果显示，总体上看并没有明显地让径流模拟更好，但是模拟只有两年，所以结果也不能轻易得出。
+结果方面，没有给出太多具体的性能指标，更多的是比较RMSE。
+
+水库模拟中，比较了有无水库以及不同水库模式模拟的RMSE的差异。文章给出的模式和其他更简单的水库模式或者无水库模式相比，在28个里面的18个都是最小的RMSE，25个是比无水库和natural lake模块都要好的。
+
+整体径流模拟方面，如图11综合比较了全球84个径流站点的在有无水库模拟条件下的结果，结果显示，总体上看并没有明显地让径流模拟更好，但是模拟只有两年，所以结果也不能轻易得出。
+
+## Anthropogenic impacts on continental surface water fluxes (2006)
+
+这是该领域一篇比较经典的文章（Haddeland 2006）。文章通过在VIC模型中引入水库模型开展了continental-scale的模拟以研究水库和灌溉取水对大陆尺度地表水通量的影响。加入的水库模块能模拟灌溉需水，获取水库调度和灌溉取水对地表水通量的主要影响。比如结果显示，北美地区模拟的灌溉需水和耗水分别为191和98立方公里/年。
+
+VIC模型里面的灌溉取水模块用的也是这位作者之前论文中的模型。forcing data北美是NLDAS数据（原文还有亚洲地区，这里主要以记录方法思路及部分性能结果为主，暂略对其阐述），时间日尺度，空间分辨率0.5度，模拟1980-1999共20年。灌溉面积信息来自另一篇文献，作物信息来自作者灌溉取水模块那篇文章。Dam信息从the International Commission on Large Dams (ICOLD) 等处获取，共633个全球最大的水库。
+
+水库模块是一个generic reservoir model，在原routing model中实现。基于优化算法根据给定的水库入流、库容和下游需水情况来计算最优泄流。用的是单一水库的优化，不考虑梯级水库。模拟是在日尺度上进行。需水计算是在月尺度上，每个月内保持不变。
+
+其中，入流（包括未来入流），从文章上看应该都是基于VIC模拟出的结果，因为前面讲输入的时候没有提到reservoir inflow的事，且在介绍reservoir model的时候，有提到reservoir inflow是simulated inflow。所以从水库模块和水文模型的耦合来看，算是online的。
+
+从结果看，分析的是月尺度上的Simulated mean monthly runoff to the receiving oceans的结果，见原文图4，没有给出具体的指标。
 
 ## Calibrating a watershed simulation model involving human interference (2007)
 
@@ -116,7 +128,11 @@ $$R(t)=R^*(t)+\epsilon (t)$$
 - If the stored volume variation $\triangle V$ is negative (i.e., the stored volume in reservoirs decreases), $\triangle V$ is added to the content of the routing store (见原文 Figure 3);
 - If $\triangle V$ is positive (i.e., the stored volume increases), $\triangle V$ is subtracted from the content of the production store (见原文Figure 3).
 
-这个方法不用改变参数，只是在模型计算过程中，**从模型的状态量中抽走/加入一部分水量**，这部分水量由聚合水库的库容变化值来确定。
+这个方法不用改变参数，只是在模型计算过程中，**从模型的状态量中抽走/加入一部分水量**，这部分水量由聚合水库的库容变化值来确定。模型是online的。
+
+数据上收集日尺度数据，对每个流域，包括：面雨量、平均气温曲线以计算蒸散发PE、下游测站径流，日尺度的水库库容（无水库入流）。收集了13年的连续数据。
+
+初始的GR4J模型没有考虑水库模块，用来作为对比基准。大部分是法国的，在美国的三个站点里，有两个我是有数据的Oklahoma的Anadarko站（usgs id：07326500）以及Texas的Three Rivers站（usgs id：08210000），他的NSE分别为：0.55/0.53 以及 0.01/-0.107，每个站点两个数据分别表示不考虑水库库容和考虑水库库容的。可以看到两个站点在考虑水库库容时都变差了。我的是0.52和0.36。但是我们输入有所不同，他是用的站点雨量，我是forcing数据。也没有很大的可比性。
 
 结果（原文图4）表明，the method developed can effectively account for reservoirs despite the lumped modeling approach, with significant improvements in the simulation of low flows（NSlq主要关注low flow，原文图4右）, but more limited for high flows （NSq是主要关注high flow的，即左图）.
 
@@ -145,6 +161,10 @@ $$R(t)=R^*(t)+\epsilon (t)$$
 ![](QQ截图20201219173319.png)
 
 $$S_t=S_{t-1}+(I_t-R_t)\triangle t$$
+
+其模拟也是月尺度的，没有用到水库的入流等数据，所以也是online的。同一个网格如果有多个水库就直接聚合了。小水库直接在每个grid总体估算。
+
+其目的不是对水库径流模拟进行分析的，所以不多看结果了。
 
 ## Quantifying human disturbance in watersheds: Variable selection and performance of a GIS-based disturbance index for predicting the biological condition of perennial streams (2010)
 
@@ -217,6 +237,16 @@ $$S_t=S_{t-1}+(I_t-R_t)\triangle t$$
 
 总之，分析水库的影响有几个较重要的因素：河流大小，DOR，还有水库的调度模式等。
 
+## Impact of reservoirs on river discharge and irrigation water supply during the 20th century (2011)
+
+这篇文章继续沿用了前序文章里的方法，来分析水库对径流以及灌溉供水的影响。
+
+具体方法是在LPJmL模型（0.5度日尺度）模型中加入水库模块并更新了其灌溉模块。水库模块用了Hanasaki和Haddeland的方法。
+
+数据上，将月尺度的降水、温度等气象数据降尺度到日尺度上；作物和灌溉数据来自一些文章中的信息；水库数据来自GRanD，大于5立方公里的水库被放到正确的位置上；径流数据用来对比的，从Global Runoff Data Center获取，月尺度的，522个站点。没有水库入流数据或者库容数据，应该也是online的。
+
+结果性能指标是RMSE。
+
 ## An Operation-Based Scheme for a Multiyear and Multipurpose Reservoir to Enhance Macroscale Hydrologic Models （2012）
 
 这篇文章（Wu and Chen 2012）在SWAT模型中加入水库模块，出流的确定也是以给定天的多年平均值为基准的一个$\triangle O(i)$，这个值包括发电，供水和储水三个方面的竞争。三方面都依据当前水位和几个特征水位（汛限水位、发电临界水位、死水位等）之间的差别，结合各月release的多年平均，配合四个参数来计算的。
@@ -225,7 +255,7 @@ $$\triangle O(i)=[\alpha \eta _{pow}(i) + \beta \eta _{sup}(i) + \gamma \eta _{i
 $$\eta _{pow}(i)=\frac{V(i)-V_c}{max(V_p-V_c,V_c-V_d)}$$
 其中，V(i)是当前库容，$V_c, V_p, V_d$是critical level（发电）、flood control level（防洪）、dead level（死水位）对应库容。
 
-模型在1965-1984年数据上率定，率定时候用的是SWAT模拟的inflow和观测的水库日storage和outflow，算法是shuffled complex evolution，在1987-1988年数据上验证。
+模型在1965-1984年数据上率定，率定时候用的是SWAT模拟的inflow和观测的水库日storage和outflow，算法是shuffled complex evolution，在1987-1988年数据上验证。所以该模型也是online的。只是最开始的时候给一个初库容。
 
 最后的模拟结果表明，相比于SWAT内置的水库模块（原文scheme I）以及多元回归（Vi与 Vi-1和Ii之间的回归关系 $\triangle V(i) = (a+b) V(i-1)+cI(i)$，原文scheme II）方法，其方法（scheme III）在模拟时候表现更好，根据原文表2的描述，每年单独率定的参数（原文表3）在日尺度上模拟streamflow的NSE能达到0.36，所有年份数据一起率定的参数对应NSE为0.28，而对比基准的两种方法分别是0.13和0.21
 
@@ -245,7 +275,7 @@ $$\eta _{pow}(i)=\frac{V(i)-V_c}{max(V_p-V_c,V_c-V_d)}$$
 
 模型率定同时考虑自然和人类用水的因素，用水数据难以获取，所以表达为参数，使用率定的方式处理。文章认为用水的空间分布是和land use及天气情况相关。分了两个时期，分别对pond，reaches和shallow aquafers定义了参数来表示。
 
-前面这三段的内容，在模型里面是相互之间有联系的，在模型里表达会统一到一块的。具体实现上，个人是这么理解的，大水库划分好子流域，每个子流域，小水库在模型外面就能耦合，class1-3的处理在外面就能处理好，然后输入到SWAT里面的表达class4-5的水库模块（原文图2）。
+前面这三段的内容，在模型里面是相互之间有联系的，在模型里表达会统一到一块的。具体实现上，个人是这么理解的，大水库划分好子流域，每个子流域，小水库在模型外面就能耦合，class1-3的处理在外面就能处理好，然后输入到SWAT里面的表达class4-5的水库模块（原文图2）。模型是online模式的，水库的信息基本只用了一些属性数据。
 
 原文图7展示了计算对比结果，可以看到S1（文章提出的方法）的结果是优于S0（SWAT原装表达水库的模型）的，每个子图的NSE都有提高。
 
@@ -260,7 +290,7 @@ $$\eta _{pow}(i)=\frac{V(i)-V_c}{max(V_p-V_c,V_c-V_d)}$$
 - 水库模块对调度规则、自然径流vs调节径流率定、消耗性用水vs取水的敏感性
 
 具体方法是分initialization和simulation两个阶段。
-初始化阶段，用VIC和MOSART（产汇流）计算得到每个subbasin（水库为出口断面）的自然径流作为水库入流。 inflow和demand一起作为用来设置调度规则。demand是从一个需水模型（从USGS用水报告分解到这篇文章关心的月、日尺度上）计算得到的。
+初始化阶段，用VIC和MOSART（产汇流）计算得到每个subbasin（水库为出口断面）的自然径流作为水库入流。 inflow和demand一起作为用来设置调度规则。demand是从一个需水模型（从USGS用水报告分解到这篇文章关心的月、日尺度上）计算得到的。那就算是online模式的了。
 
 模拟阶段，WM（water management）即水库模块加入到routing model，由runoff，baseflow和demand驱动。不同的调度规则只是WM中的规则不同，其他都一样。
 
@@ -294,7 +324,7 @@ WM中先从routing model里面的subnetwork取水，不能满足的话就从main
 
 虽然水库的蒸发计算是基于面积的，但是水库还是表达在模型的一个grid cell中的，且在这篇文章用到的DHSVM模型中每个river segment只能有一个水库。考虑到DHSVM的高分辨率，river routing构建是用能包含多个grid cells的river segments的。
 
-水库输入是上有入流和区间降雨，水库模块计算的是出流（release scheme）和库容（水量平衡）。
+水库输入是上有入流和区间降雨，水库模块计算的是出流（release scheme）和库容（水量平衡）。入流应是水文模型模拟的，所以也是online的。
 
 水库模拟包括蒸发模块，泄流模块和库容平衡计算：
 
@@ -337,9 +367,11 @@ DHSVM模型是PNNL开发的：https://github.com/pnnl/DHSVM-PNNL
 
 这篇文章（Ehsani 2016）在聚合水库data-driven分析方面给予了我们一些启示。
 
+它的输入显然是包括观测的水库入流的，所以是offline的模式。
+
 ## The impact of lake and reservoir parameterization on global streamflow simulation (2017)
 
-这篇文章（Zajac 2017）也是在grid上对水库建模，嵌入到LISFLOOD模型中，LISFLOOD是一个半概念半物理模型，在其routing scheme的river channel里加入了湖泊和水库模块。湖泊直接结合weir equation和水量平衡公式等分析；水库基于水位控制的调度规则来模拟，因为缺少运行相关的数据，因此都是假设了一些参数，比如最小库容，normal storage和最大storage（这三个值是原文水库调度公式里面的三个量）都是按总库容的0.1，0.3和0.97来的；再比如最小，normal和non-damaging outflow假设为日自然径流的5%，30%和97th percentile。
+这篇文章（Zajac 2017）也是在grid上对全球最大的667个水库和463个湖泊建模，嵌入到LISFLOOD模型中，LISFLOOD是一个半概念半物理模型，在其routing scheme的river channel里加入了湖泊和水库模块。湖泊直接结合weir equation和水量平衡公式等分析；水库基于水位控制的调度规则来模拟，因为缺少运行相关的数据，因此都是假设了一些参数，比如最小库容，normal storage和最大storage（这三个值是原文水库调度公式里面的三个量）都是按总库容的0.1，0.3和0.97来的；再比如最小，normal和non-damaging outflow假设为日自然径流的5%，30%和97th percentile。总的来看，输入中也没有单独提到水库的入流，所以也算作online的。
 
 其结果有分析加入lake和reservoir之后的影响，在全球390个湖泊和水库的分析中，加入水库能提高65%的流域径流预测（NSE提高值中位数为0.16），但也降低了28%的（NSE减少值中位数-0.09）。原因就包括由于缺少调度规则相关的特定知识而对水库参数的粗略估计带来的不确定性影响了径流预测性能，这也是将水库模块嵌入到水文模型中但性能并不优秀的一个重要原因。
 
@@ -347,9 +379,11 @@ DHSVM模型是PNNL开发的：https://github.com/pnnl/DHSVM-PNNL
 
 这篇文章（Coerver 2018）是利用神经网络结合模糊规则ANFIS adaptive-network-based fuzzy inference system，在不同地区的11个水库上拟合了调度数据（linking inflow and storage with reservoir release）。结果发现，大水库调度更看水位，小水库则看流量。推求的规则能用来模拟水库出流，月尺度模拟的NSE平均值可以达到0.81；这时候Hanasaki的方法也能到0.42
 
+这篇文章算是offline的，用了recent时段的水库库容和入流，这类data-driven的方式都算是offline的。
+
 ## Modeling and simulating of reservoir operation using the artificial neural network, support vector regression, deep learning algorithm （2018）
 
-三个机器学习算法来模拟水库运行，不同时间尺度－－月／日／时，模拟30年的水库出流。
+三个机器学习算法来模拟水库运行，不同时间尺度－－月／日／时，模拟30年的水库出流。同样地，这类data-driven的方式都算是offline的。
 
 在葛洲坝水库的实验结果显式水库调度过程是可以被拟合的，在所有时间尺度上都表现除了极好的效果，LSTM NSE值都能到0.999，同时ANN和SVR最好分别能到0.98，可能是因为葛洲坝是个径流式电站，基本上入流有了的话，出流也就很容易得到了。
 
@@ -414,6 +448,8 @@ The WRF-Hydro system has the ability to execute a number of physical process exe
 目前这个模型中的水库模块还是比较简单的，有两种方式来考虑，其一直接提供水库泄流到模型输入中，这一过程称之为streamflow insertion，不过这样的话就没有办法预测未来情景，并且水量平衡没法保障，还有就是操作设置不连贯，尤其是梯级水库的时候会比较麻烦；其二，是natural lake的方式。这篇文章就是改进第二种方式，把DZTR嵌入到水文模型中。
 
 根据其结果，使用general的方式，对于90%的水库，相比于不加水库模块，release的NSE就能提高0.25以上。和另外两种调度模型相比（Hanasaki和Doll的）也表现更好。
+
+这篇虽说是和水文模型耦合了，不过水库的入流是观测的，所以其实算是offline的模式。
 
 ## The Community Land Model Version 5: Description of New Features, Benchmarking, and Impact of Forcing Uncertainty (2019)
 
@@ -602,17 +638,19 @@ $$S_{target}=S_0+\bar{i_m}*(1 year)-k_{rls}\bar{i_m}*(1 year)=S_0+\frac{C}{c}-\f
 
 在计算中，能率定的就率定R，不能率定的才使用公式。模拟中，梯级水库本来是上下游有影响的，要一次性全部计算下来，然后迭代计算更新参数比较好，但是这样就难以进行，所以就从上游到下游依次率定。一个水库的入流是由上游所有有大坝和没大坝河道出流的汇流结果，但是公式不是特别理解，因为有一个比例。
 
-然后是结果。结果上看，最好的一个水库的release 的相关系数也只到0.61
+然后是结果。结果上看，最好的一个水库的release 的相关系数也只到0.61。这个模型总的来说，算是online模式的，工作量还是相当大的。
 
 ## Real-time reservoir operation using recurrent neural networks and inflow forecast from a distributed hydrological model （2019）
 
-这篇论文最终的目的不是水库嵌入水文模块，是用水文模型的预报做了水库的输入来预测更长时间的水库行为。重点是，用RNN能模拟水库的行为。在三个水库上模拟的结果显示，LSTM预测的NSE能达到0.85，0.93和0.66 （对不同水库分别调优，用不同超参数的结果）。
+这篇论文 （Yang et al. 2019）最终的目的不是水库嵌入水文模块，是用水文模型的预报做了水库的输入来预测更长时间的水库行为。重点是，用RNN能模拟水库的行为。在三个水库上模拟的结果显示，LSTM预测的NSE能达到0.85，0.93和0.66 （对不同水库分别调优，用不同超参数的结果）。
+
+和前面data-driven的方式一样，这里也是offline的。
 
 ## On the representation of water reservoir storage and operations in large-scale hydrological models: implications on model parameterization and climate change impact assessments （2020）
 
 这篇文章还是蛮有趣的，论文发现，在VIC中无论嵌不嵌入水库模块，最后都能很好地模拟（在1996-2005年范围内率定和验证）有水库影响的径流，但是在不同气候模式下（CMIP5 climate project 2050-2060情形下），可以看到结果的统计指标（最大最小平均月径流）会有一定差异。
 
-研究流域是湄公河，水库模块采用的是水位控制的调度图形式的。每日的目标水位需要提前设置调度规则确定，调度规则的设定来自于另一篇文章（https://doi.org/10.1061/(ASCE)WR.1943-5452.0000286） ，这里就不赘述了，总之是划定了一条目标水位线，有了几条目标水位线，就把水库水位分区了，每个分区都对应不同的调度函数。
+研究流域是湄公河，水库模块采用的是水位控制的调度图形式的。每日的目标水位需要提前设置调度规则确定，调度规则的设定来自于另一篇文章（https://doi.org/10.1061/(ASCE)WR.1943-5452.0000286） ，这里就不赘述了，总之是划定了一条目标水位线，有了几条目标水位线，就把水库水位分区了，每个分区都对应不同的调度函数。计算模式应当是online的，没有在中间插入水库观测入流或者库容。
 
 ![](QQ截图20201220105123.png)
 
@@ -638,7 +676,7 @@ Doll的方法是一个简单的水库下泄方法：
 
 ## An experiment on reservoir representation schemes to improve hydrologic prediction: coupling the national water model with the HEC-ResSim （2020）
 
-这篇文章将NWM和Hec-ResSim进行了耦合，并使用了两种水库表达的scheme，一是水库调度的模拟，二是计划安排好的调度方案。
+这篇文章将NWM和Hec-ResSim进行了耦合，并使用了两种水库表达的scheme，一是水库调度的模拟，二是计划安排好的调度方案。其中提到了水库入流是simulated natural inflow，因此可以算作是online模式的。
 
 在NWM中，lakes和reservoirs都是用一个level pool routing scheme表示的，文章中称为NWL-LP，它是没怎么考虑水库调度的。
 
@@ -670,4 +708,8 @@ Hec-ResSim是用来做水库调度的，模拟防洪，供水等水库调度，�
 
 ## Data‐Driven Reservoir Simulation in a Large‐Scale Hydrological and Water Resource Model (2020)
 
+这篇文章的data-driven不是machine learning的意思，是根据历史库容和下泄数据推求release-availibility 函数。相对应的inflow-and-demand-based scheme，比如Hanasaki等的模式被称为 generic release scheme。
 
+这篇文章的探讨了 data-driven scheme对有水库模块的LHM（large-scale hydrological and water resources models）模拟的提升能力。在Columbia River Basin的36个关键水库上比较了其和generic release scheme。还结合其之前的horizon curve概念，评估了预报径流的作用。
+
+结果发现，当使用online模式（LHM‐simulated inflows；对应的offline就是利用observed inflow了），把LHM的误差包含进来的时候，data-driven scheme的性能fail to offer a robust improvement；某些情况下，这时候加入预报径流还会使模拟变差，通过进一步敏感性分析发现，这是因为依靠预报径流的水库模型会放大LHM径流的偏差。所以结论是：如果想要运用data-driven scheme对模型的作用，首先需要进一步处理LHM中的模型不确定性。
