@@ -15,9 +15,83 @@
 
 然后，这篇文章的主要目的是：考虑围绕人类活动对陆面水循环影响的科学以及数据上的挑战，目前实践的情况以及未来研究的方向，主要关注在水资源管理方面，关注水量，不同人类需求的水资源的存储，抽取和再分配。目前Large scale model中Water resources management 模块还存在一些基本问题。首先，是 the conservation of water，在human-water耦合系统中capture water，但这建模很复杂；其次影响因素多，如何考虑是问题；第三，企业晒reginal 和 global的用水和水资源系统调度数据，比如gao huilin等人的文章中说：“there are no direct observations of reservoir storage”；第四， local水资源调度模型和large-scale的应用与研究是有gap的，局部的研究有更充分的数据，而大尺度的分析是较难用local上的方法的。为了评估水资源管理的影响，需要先用算法来描述需水并将其包含到大尺度模型中。这篇文章具体来说，就是调研 the representation of water demand。
 
-论文将需水分为两类，irrigatve和non-irrigative。讨论了不同的计算算法。通常的做法是降尺度（top-down 方法）或直接在grid尺度建模（bottom-up方法）。根据应用的类型，这些算法可以被包含在不同的大尺度模型中。另外，需水的计算融入到模型中有online和offline两类不同模式。offline是不需要需水和自然过程之间的互相影响的，不考虑互馈；online是考虑的。GHM中一般是offline的，因为不考虑energy balance等过程。
+论文将需水分为两类，irrigatve和non-irrigative。讨论了不同的计算算法。算法通常的做法是降尺度（top-down 方法）或直接在grid尺度建模（bottom-up方法）。根据应用的类型，这些算法可以被包含在不同的大尺度模型中。另外，需水的计算融入到模型中有online和offline两类不同模式。offline是不需要需水和自然过程之间的互相影响的，不考虑互馈；online是考虑的。GHM中一般是offline的，因为不考虑energy balance等过程。以下是论文的各部分主要内容。
+
+第一，human demand的类型即其对water cycle的影响。灌溉用水还是占比较大，减少了streamflow volume和地下水位，扰动了自然条件；另外影响土壤含水量，会影响陆面过程。非灌溉用水相对少，但有显著的空间变化性（人口，经济水平等），不过非灌溉用水更多地不是consumptive water use，纯消耗的只占一小部分，更多地是return flow。，对径流的扰动更多地是timing。
+
+第二，irrigative demand in large-scale models 的 available representation。灌溉比非灌溉的demand探索得更深。为简化描述，作者对灌溉需水的表示进行了分类：尺度(区域vs全球)；和/或模拟模式(离线与在线)。原文表1(区域)和表2(全球)总结离线模拟的典型例子。表3提供一些online的例子。离线更多，在线的模拟范围都先对较小。这里把表内容copy过来了。
+
+Table 1. Representative examples including **regional irrigation** in large-scale models (**offline mode**)
+
+|Reference |Irrigation data |Irrigation demand |Region |Host model |Forcing |Temporal resolution| Spatial resolution|
+|-|-|-|-|-|-|-|-|
+|Haddeland et al. (2006)|Döll and Siebert (2002)| Difference between current soil  moisture content and minimum of FAO Penman–Monteith crop-specific evapotranspiration and soil moisture content at field capacity.|Colorado (USA) and Mekong (east Asia)|VIC (Liang et al., 1994) |Adam and Lettenmaier (2003); Maurer et al. (2002)|3 h |0.5° * 0.5°|
+|Haddeland et al. (2007)|Siebert et al. (2005)|Haddeland et al. (2006)| North  America and Asia|VIC (Liang et al., 1994) |Maurer et al. (2002)|24 h| 0.5° * 0.5°|
+|Gueneau et al. (2012)|GAEZ (IIASA/FAO, 2012);FRIS (USDA, 2008)|Difference between actual and potential evapotranspiration based on Farmer et al. (2011). Crop growth and irrigation losses included.|USA| CLM3.5 (Oleson et al., 2004, 2008)| NCC (Ngo-Duc et al., 2005b)| 6 h |2.5° *2.5°|
+|Leng et al. (2013)|MODIS (Ozdogan and Gutman, 2008);NASS (USDA, 2002)|Difference between current and ideal soil moisture content based on CLM4CNcrop crop growth model of CLM4 (Levis and Sacks, 2011; Levis et al., 2012).|Conterminous USA |CLM4 (Lawrence et al., 2011)|NLDAS (Cosgrove et al., 2003)|1 h |0.125° *0.125°|
+|Nakayama and Shankman (2013)|Liu et al. (2010)| Difference between current soil moisture content and soil moisture at the field capacity.|Changjing, Yellow River basins (China)| NICE (Nakayama, 2011)|ECMWF (http://www.ecmwf.int/en/forecasts/datasets)| 6 h |10 km*10 km|
+|Voisin et al. (2013)|Crop area projections in Chaturvedi et al. (2013a, b).|Downscaling GCAM model estimations (Wise and Calvin, 2011;Wise et al., 2009a) using methods of Hejazi et al. (2013a), Siebert and Döll (2008) and Hanasaki et al. (2013a, b).| US Mid-west |SCLM-MOSART(Lawrence et al.,2011; Li et al.,2013); Tesfa et al. (2014)| CASCaDE(http://cascade.wr.usgs.gov)| 1 h |0.125° *0.125°|
+
+Table 2. Representative examples including **global irrigation** in large-scale models (**offline mode**).
+|Reference |Irrigation data |Irrigation demand |Host model |Forcing |Temporal resolution| Spatial resolution|
+|-|-|-|-|-|-|-|
+|Döll and Siebert (2002) |Döll and Siebert (2000)|Difference between Smith (1992) effective rainfall and Priestley and Taylor (1972) crop-specific potential evapotranspiration and Allen et al. (1998) multipliers.|WaterGAP(Alcamo et al.,2003)| CRU TS 1.0 (New et al., 1999, 2000)| 24 h| 0.5° 0.5°|
+|de Rosnay et al. (2003)*| Döll and Siebert (2002)| Difference between effective rainfall and FAO potential evapotranspiration (Allen et al., 1998) without considering irrigation efficiency.| ORCHIDEE(Ducoudré et al., 1993)| ISLSCP-I (Sellers et al., 1996b)|24 h| 1° 1°|
+|Hanasaki et al. (2006) | Döll and Siebert(2000)| Similar to Döll and Siebert (2002). Reference evaporation is based on FAO Penman–Monteith.|TRIP (Oki and Sud, 1998)|ISLSCP-I (Sellers et al., 1996b)|24 h |0.5° 0.5°|
+|Wisser et al. (2008)| Siebert et al. (2005, 2007);GIAM (Thenkabail et al., 2009) |Similar to Haddeland et al. (2006) using Allen et al. (1998) procedure.| WBM(Vörösmarty et al., 1998)| CRU TS 2.1 (Mitchell and Jones,2005);NCEP (Kalnay et al.,1996)|24 h |0.5° 0.5°|
+|Rost et al. (2008, 2009)|Siebert et al. (2007)| Difference between available plant moisture and an updated Priestley and Taylor (1972) potential evaporation based on potential canopy conductance of carbon and water (Sitch et al., 2003).|LPJmL (Bondeau et al., 2007)|CRU TS 2.1(Mitchell and Jones,2005)| 24 h| 0.5° 0.5°|
+|Hanasaki et al. (2008a, b) |Döll and Siebert (2000)|Difference between current and 75% of field capacity. Irrigation applied 30 days prior to planting. Detailed crop growth representation based on SWIM (Krysanova et al.,1998). | H08 (Hanasaki  et al., 2008a, b)|NCEP-DOE (Kanamitsu et al.,2002); GSWP-2(Zhao and Dirmeyer,2003)|24 h |1° 1°|
+|Siebert and Döll (2010)|MIRCA2000 (Portmann et al.,2010)|Difference between actual and crop-dependent reference evapotranspiration computed according to Priestley and Taylor  (1972). Crop coefficients obtained from Allen et al. (1998).| GCWM (Siebert and Döll, 2008)|CRU TS 2.1 (Mitchell and Jones, 2005)| 24 h |0.08° 0.08°|
+|Wada et al.(2011, 2012)| MIRCA2000 (Portmann et al.,|Difference between actual and potential transpiration according to van Beek et al. (2011), using Priestley and Taylor|PCR- GLOBWB  |CRU TS 1.0 (New et  al., 1999, 2000)|24 h |0.5° 0.5°|
+
+2010) (1972) for calculating crop-specific and transpiration (Allen et al., 1998). (van Beek et
+al., 2011)
+Pokhrel et al. Siebert et al. (2007) Procedure of Hanasaki et al. (2008a, b). Crop calendar is based MASTIRO Kim et al. (2009); 6 h 1° 1°
+(2012) on potential evapotranspiration (Allen et al., 1998). (Takata et al., GPCC (Rudolf et al.,
+2003) 2005)
+Wada et al. MIRCA2000 Constant 50mm surface-water depth for paddy irrigation until PCR- ERA-Interim (Dee et 24 h 0.5° 0.5°
+(2014) (Portmann et al., 20 days before harvesting. For non-paddy areas, the difference GLOBWB al., 2011); MERRA
+2010) between current and ideal plant available moisture at field (van Beek et (http://gmao.gsfc.nasa.gov/merra/)
+capacity with dynamic root zone. al., 2011)
 
 
+Table 3. Representative examples including irrigation in coupled land-surface models (online mode).
+Reference Irrigation data Irrigation demand Region Host LSM Climate Temporal Spatial
+model resolution resolution
+Adegoke et LandSat Target soil moisture deficit (difference High LEAF-2 RAMS 30 s 10 km10 km
+al. (2003) (http://landsat.gsfc.nasa.gov/) between actual and saturated soil Plains (Walko et (Pielke et al., nested in nested in
+moisture). (USA) al., 2000) 1992) 1 min 40 km40 km
+Sacks et al. FAO-AQUASTAT AQUASTAT irrigated water uses Global CLM3.5 CAM (Collins 20 min 2.8 2.8
+(2009) (http://www.fao.org/nr/water/aquastat/main/index.stm) applied at constant rate when LAI (Oleson et et al., 2004,
+exceeds 80% of the maximum annual al., 2008) 2006)
+value.
+Sorooshian et CIMIS-MODIS Target soil moisture deficit (irrigation California Noah (Ek et NCAR-MM5 30 min 4 km4 km
+al. (2011) (http://wwwcimis.water.ca.gov/) starts when the soil moisture drops Central al., 2003) (Chen and 1 h 12 km12 km
+below a maximum depletion threshold Valley Dudhia, 36 km36 km
+beyond which the plant in stressed (a (USA) 2001a, b)
+percentage of field capacity,
+depending on the crop) and continues
+to field capacity)
+Harding and MODIS (Friedl et al., Target soil moisture deficit (difference Great Noah (Ek et WRF 30 and 25 s 10 km10 km
+Snyder 2002; Ozdogan and between actual and saturated soil Plains al., 2003) (Skamarock
+(2012a, b) Gutman, 2008); NASS moisture to depth of 2 m). (USA) et al., 2005)
+(USDA, 2002)
+Guimberteau Döll and Siebert (2002) Difference between potential Global ORCHIDEE LMDZ4 30 min 2.5 1.25
+et al. (2012) transpiration and the net water amount (Ducoudré et (Hourdin et
+kept by the soil al., 1993) al., 2006)
+(i.e., the difference between
+precipitation reaching the soil and
+total runoff).
+Qian et al. MODIS (Ozdogan and Similar to Sorooshian et al. (2011). Southern Noah (Ek et WRF 3 h 12 km12 km
+(2013) Gutman, 2008; Ozdogan Based on Ozdogan et al. (2010), Great al., 2003) (Skamarock
+et al., 2010) moisture threshold is fixed at 50% of Plains et al., 2005)
+filed capacity. Roots grow based on (USA)
+
+第三，non-irrigative demand 的 available representation。
+
+以上两部分是这篇文章的最重要内容。接下来，第四，介绍了上面的表达在large-scale models中的应用。
+
+最后是讨论以及对未来的展望。
 
 ## Effects of spatially distributed sectoral water management on the redistribution of water resources in an integrated water model （2017）
 
