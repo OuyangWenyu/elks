@@ -21,6 +21,23 @@
 
 第二，irrigative demand in large-scale models 的 available representation。灌溉比非灌溉的demand探索得更深。为简化描述，作者对灌溉需水的表示进行了分类：尺度(区域vs全球)；和/或模拟模式(离线与在线)。原文表1(区域)和表2(全球)总结离线模拟的典型例子。表3提供一些online的例子。离线更多，在线的模拟范围都先对较小。这里把表内容copy过来了。
 
+灌溉的引入一定是增加了grid的异构性的，sub-grid级的异构（additional tile）。估计 irrigation demand 需要 irrigation algorithms。irrigation demand的定义是 water required for ideal crop growth in addition to the available water from precipitation。要想模拟基于网格的irrigation demand，首先需要明确 crop type，the extent of irrigated regions 以及 growing seasons。
+
+- crop type 可以从 regional 和 global 数据集（比如 USDA 数据）或者遥感数据（比如MODIS）中提取。
+- 识别 growing seasons 有两种常用的方法，较简单的方法是在满足一定温度和降雨的标准时作物就能生长，这在无能量平衡计算的模型中较常用；另一类相对负责的模型可以根据 biophysical conditions of crop growth and/or soil water, canopy and energy balance conditions 来估计作物生长，这在LSM中更常见一些。两种方式都有较大不确定性。
+- 生长season确定后，可以计算 irrigation demand。这里就有两类算法了，top-down 和 bottom-up 。有一系列具体的算法。如果灌溉需求完全满足，则实际蒸散比等于标准条件下作物蒸散比。在离线模式下，灌溉率会扰动irrigated tiles的土壤含水量，蒸散发，深层下渗以及runoff。在线应用中，垂直vapor以及heat fluxes也需要考虑，total fluxes for each grid 能用 the sum of the flux contributions from irrigated and non-irrigated portions of the grid 来算，也被引入气候模型作为耦合边界条件。
+
+下面稍微展开下top-down和bottom-up两类计算方法。
+
+top-down类的方法里，irrigation demand不是直接计算的，而是通过将相对粗糙尺度（比如国家尺度，行政区划尺度）的信息降尺度来估计的。这类信息都是基于普查的类似年鉴之类的文件或socio-economic 模型输出的。top-down 方法受water use 全球数据可用性的影响，比如FAO的Information System on Water and Agriculture (AQUASTAT; http://www.fao.org/nr/water/aquastat/main/index.stm)，AQUASTAT能提供国家或地区级的年用水数据，也已扩展到包括socio-economic模型输出了，比如the Global Change Assessment Model (GCAM)。GCAM基于socio-economic 变量估计了农业production，再基于此，using the water required for each crop per unit of land 间接推算出 irrigation water use。降尺度主要通过land-use，technological and/or socio-economic proxies 来执行。这类方法不确定性很大，所以irrigation demand计算更多还是使用bottom-up的方式。
+
+bottom-up类方法直接在grid内通过模拟irrigated tiles 的作物生长来执行，尽管sub-grid尺度异构性很高，这类方法也是被广泛的使用。这类方法都是围绕理想作物需水估计的，即没有water deficit。requirement是基于potential evapotranspiration （ETo，衡量的是大气的moisture deficit）的。有多种方法来估计ETo，因此这一估计也可能各种方法各不相同。LSMs中通常包括能力平衡计算，能求解日变化，因此能直接计算ETo和实际evaporation。另一类常用的方法是FAO的计算irrigation water requirements，这类方法常用于GHMs中，其 evapotranspiration is calculated for a reference crop，然后再利用 a set of empirical coefficients，以及 a function of crop type and development stage 来校正。计算ETo的方法也很多，比如FAO Penman-Monteith。以下再稍展开记录下bottom-up类的方法，由易到难。
+
+- 最简单的表示是：每一时刻的灌溉需水量是使根部土壤水分达到饱和所需的水量，不过它描述了一个极端的需求条件，并明显高估了实际的灌溉用水需求
+- 一个更实际的，不过仍然比较简单的方法是认为土壤在生长季节对水分的需求被认为是田间容量，那么灌溉所需的水是使土壤水分达到田间容量所需的水，不过由于蒸发量往往在土壤达到田间容量之前就已达到potential level，这仍然会高估实际需水。蒸发量达到潜在蒸发量ETo的阈值取决于作物，但在大尺度模型中阈值通常被认为是一个定值，也有实现root growth的算法来避免root zone是定值从而获取变化阈值的方法。
+- 更现实的灌溉需水量定义是基于作物的潜在蒸散量crop-dependent potential evapotranspiration和作物可用水available crop water之间的差异，这已经被广泛使用了。作物生长情况用潜在蒸散量的恒定月乘数来描述，而有效降雨量则用作作物可用水的代理表示。这里对此方法有两个限制：一是，FAO对与灌溉需水的定义考虑了作物蒸腾和土壤蒸发，这可能会高估需水；第二，假设作物生长仅仅是可用水的函数。
+- 基于potential transpiration 而不是 potential evapotranspiration 来定义irrigation demand。潜在蒸腾作用是指作物在没有water stressed的情况下所产生的蒸腾作用。如果其所在host模型有相关的计算，潜在蒸腾作用能考虑CO2施肥效应，可以代表植物对气候条件和/或作物生长周期的适应。显然这种主要用在LSMs中。
+
 Table 1. Representative examples including **regional irrigation** in large-scale models (**offline mode**)
 
 |Reference |Irrigation data |Irrigation demand |Region |Host model |Forcing |Temporal resolution| Spatial resolution|
@@ -58,11 +75,26 @@ Table 3. Representative examples including irrigation in coupled land-surface mo
 |Guimberteau et al. (2012)|Döll and Siebert (2002) |Difference between potential transpiration and the net water amount kept by the soil (i.e., the difference between precipitation reaching the soil and total runoff).| Global| ORCHIDEE (Ducoudré et al., 1993)|LMDZ4(Hourdin et al., 2006)| 30 min |2.5° *1.25°|
 |Qian et al. (2013)|MODIS (Ozdogan and Gutman, 2008; Ozdogan et al., 2010) |Similar to Sorooshian et al. (2011). Based on Ozdogan et al. (2010), moisture threshold is fixed at 50% of filed capacity. Roots grow based on| Southern Great Plains (USA)| Noah (Ek et al., 2003)| WRF (Skamarock et al., 2005)|3 h |12 km*12 km|
 
-第三，non-irrigative demand 的 available representation。
+第三，non-irrigative demand 的 available representation。这部分暂略，对于非灌溉需水，更多的采用的是top-down的方法，将国家或行政区划数据转换到流域或网格尺度。
 
-以上两部分是这篇文章的最重要内容。接下来，第四，介绍了上面的表达在large-scale models中的应用。
+接下来，第四，介绍了上面的表达在large-scale models中的应用。主要还是offline的模式。online最近也有研究。
+
+- Online representation。在coupled land-surface schemes中包含灌溉能提高气候模拟。灌溉引起的降水已经被研究了很长一段时间，灌溉已经被证明对局部和区域的降水模式有显著的影响。
+- Offline representation。offline表达需水量更为普遍，各种GHMs和LSMs结合不同的需求算法已被用于模拟当前和未来条件下的需水量动态。结合水需求计算通常可以得到更真实的河流流量模拟，但是目前的模拟显示，在国家、大陆和全球尺度上，对水需求和使用的估计存在很大差异。这在后面展望部分再补充。
 
 最后是讨论以及对未来的展望。
+
+目前在对水需求进行建模和了解其对陆地水循环和人类活动的在线和离线影响方面仍存在重大gap。造成这些gap的部分原因是地球系统过程建模的复杂性，而耦合模拟模式的复杂性更为突出。除了各种计算障碍外，在线模拟的一个主要挑战是陆地和大气模式耦合的不确定性，当给定一个独特的陆面边界条件时，不同的气候模式得到的模拟结果可能是不同的。耦合灌溉地表气候模拟的另一个主要挑战是选择合适的时间和空间分辨率，在此分辨率下，陆地和大气之间的相关物理过程和反馈应该被表示和描述。理想情况下，最佳的建模分辨率应该基于物理现实主义来确定;尽管如此，耦合仿真中分辨率的选择主要受到计算资源、数据可用性和lsm支持的复杂性的限制。如果这些都不是限制因素，那么更精细的时间和空间分辨率可以改善灌溉的在线表示。
+
+通过增加空间分辨率，需要包括更多的过程，以确保在模型内水量平衡，这可能会使与水可用性有关的问题进一步复杂化。只要蒸发计算与作物需水量的估计一致，并且每种作物都由一个独特的水分库提供，那么在离线运行中，精细建模分辨率的影响似乎一般不那么显著。
+
+巨大的不确定性也与当前和未来条件下的离线模式人类需水量模拟有关。例这些不确定性主要与 (i)可用的数据支持，(ii)需求计算算法和(iii)host模型有关。这些来源是广泛且有联系的，并不能很容易地解决和独立量化。在此，作者简要地讨论了这些来源，并提出了未来发展的几个方向：
+
+首先，执行大规模模型所需的输入和forcing数据存在相当大的不确定性。这导致了重大的不一致，特别是在网格尺度上，来自不同来源的信息往往彼此不匹配(例如，土壤性质不适合土地使用)。不确定性也与执行需求计算算法所需的数据有关。比如在许多地区，灌溉区的位置也不确定，灌溉区内的作物的亚网格变化一般无法得到。数据不确定性的另一个来源是关于灌溉技术的信息普遍稀少。非灌溉数据也有类似情况。由于可以获得不同来源的全球和区域数据，出现了各种质量不同的数据集，这些数据集可能支持需求计算算法。在研究的这一阶段，还没有系统地比较各种数据集的不确定性及其对需求模拟的相关影响。这是未来探索的主要需要。
+
+其次，需求计算算法的不确定性:这包括灌溉和非灌溉需求。现有算法的局限性主要包括在时间和空间上描述作物水分需求的不确定性和限制灌溉对水的可用性。如果灌溉受到网格尺度上可用水的限制，那么host模型描述地表水和地下水资源分配的能力会阻碍模拟的质量；目前的自底向上算法由于缺少土壤和作物多样性，不能在亚网格尺度上适当考虑植物特定的水分需求。这可能导致对灌溉需求的错误估计。在目前的研究阶段，计算灌溉需求的不同方法尚未完全比较，以确定有关地区、气候和作物类型的适当算法。这可以被认为是进一步研究的重要需要。未来发展的另一个途径是使用数据同化和模型校准来改进需求模拟。对非灌溉需求，开发鲁棒的降尺度和投影算法来估计它是未来发展的重要需求。
+
+第三，host模型的不确定性:模型可以为需求模拟增加大量的不确定性，特别是灌溉。如第3节所述，灌溉需求的计算涉及求解每个模拟时间步的土壤水分平衡，这取决于host模型中有关的自然过程，如实际蒸散和土壤水分，如何参数化。考虑灌溉与大气的反馈效应可以显著地改变潜在的蒸发量，因此，基于GHMs的离线灌溉需求模拟可能存在偏差，因为它们固有地忽略了气候反馈。从这个角度来看，在线LSMs在模拟二氧化碳浓度增加和未来水资源压力方面优于GHMs，因为它们通常包含许多调查气候、碳、植被和水循环之间相互作用所需的计算组件。此外，尽管有人认为host模型的不确定性比气候forcing(2013)更显著，但灌溉算法和大规模宿主模型的不确定性尚未完全分解和区分。这就需要多种需求算法与多种host模型的混合匹配，进行系统的相互比较和敏感性分析。
 
 ## Effects of spatially distributed sectoral water management on the redistribution of water resources in an integrated water model （2017）
 
