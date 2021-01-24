@@ -14,23 +14,17 @@
     - 文献阅读简记
 - 技术
     - Ubuntu基本使用
-    - latex文档
-    - C/C++基本概念
+    - latex等文档写法
     
-本项目以 python jupyter lab为代码展示的主要工具，python外其他语言相关库可在jupyter lab中安装实践。
-因为利用xeus，可以在jupyterlab中开发不同语言的 jupyter kernel protocol，其中C++的版本是xeus-cling，可以参考：[xeus-cling](https://github.com/jupyter-xeus/xeus-cling)
+本项目以 jupyter lab为文字和代码主要编辑工具，可以在win10下直接安装依赖包并运行。win10下miniconda的安装和环境配置可以参考：[小白教程 | Miniconda安装及添加环境变量](https://mp.weixin.qq.com/s/yqyEknvYLIH5E0nMlWEDSQ?)。
 
-注意如果需要运行本repo的C++代码，则必须要在linux或者mac环境下执行,并且不可以使用anaconda默认的conda环境，因为根据xeus-cling GitHub repo的readme文件所示，目前还不支持windows环境,
-还有anaconda下xeus-cling 会有冲突导致安装失败，所以必须使用miniconda，并注意将自己的环境变量配置到miniconda下。
-
-如果想在win10下尝试,可以先在win10下安装ubuntu,安装过程可参考:[Windows Subsystem for Linux Installation Guide for Windows 10](https://docs.microsoft.com/en-us/windows/wsl/install-win10)。
+不过因为有python外其他语言相关库可能更适合Ubuntu等环境，所以推荐在win10下使用ubuntu,安装过程可参考:[Windows Subsystem for Linux Installation Guide for Windows 10](https://docs.microsoft.com/en-us/windows/wsl/install-win10)。
 
 安装成功之后，可以通过wsl.exe来使用，也可以使用mobaxterm软件来连接，硬盘挂载到/mnt/文件夹下，cd /mnt可进入；home文件夹cd即可进入，不过在windows下，home可是藏得挺深的，应该在用户文件夹下的 \AppData\Local\Packages\CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc\LocalState\rootfs\home ，大致上是这个文件夹，可能细节略有出入。
 
 win10里Ubuntu下miniconda的安装和环境配置可以参考：[Win10下Ubuntu(WSL)中Python环境配置笔记](https://zhuanlan.zhihu.com/p/63897033)
-windows下miniconda的安装和环境配置可以参考：[小白教程 | Miniconda安装及添加环境变量](https://mp.weixin.qq.com/s/yqyEknvYLIH5E0nMlWEDSQ?)
 
-下面简单给出命令：
+下面简单给出win10下使用Ubuntu安装本repo所需库的命令：
 
 ```Shell
 # 进入你想要进入的文件夹位置
@@ -66,7 +60,7 @@ conda env create -f environment.yml
 主要的packages如下：
 
 ``` text
-python=3.7, jupyterlab, xeus-cling, earthpy, hydrofunctions, seaborn, scikit-learn, sympy, pytorch, torchvision, sphinx, sphinx-autobuild, sphinx_rtd_theme, recommonmark
+python=3.7, jupyterlab, earthpy, hydrofunctions, seaborn, scikit-learn, sympy, pytorch, torchvision, sphinx, sphinx-autobuild, sphinx_rtd_theme, recommonmark
 ```
 
 安装时间较长，需要耐心等待，安装后：
