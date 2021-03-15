@@ -1,7 +1,6 @@
 name: elks
 channels:
   - conda-forge
-  - pytorch
   - defaults
 dependencies:
   - python=3.7
@@ -11,10 +10,7 @@ dependencies:
   - seaborn
   - scikit-learn
   - sympy
-  - pytorch
-  - torchvision
   - sphinx
   - sphinx-autobuild
   - sphinx_rtd_theme
   - recommonmark
-
