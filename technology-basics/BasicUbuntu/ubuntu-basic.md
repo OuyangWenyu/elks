@@ -1,8 +1,9 @@
-# Linux Ubuntu 一些必要的基础知识
+# Linux Ubuntu 一些必要的基础操作
 
 linux是科研常用的操作系统，比如VIC model， WRF model等都是在linux下充分测试的。虽然我们不必像专业的计算机人员那样刨根问底，但是一些简单的常识性只是还是不可少的，这里就日常遇到的知识点做些记录说明。
 
 一般来说，最开始接触linux系统的时候，都会听说过一本书——[《鸟哥的linux私房菜》](http://cn.linux.vbird.org/)，作为环境工程专业出身的鸟哥写的这本书那是非常适合我们这种非计算机专业的初学者的，可能的话还是阅读下比较好，至少了解下计算机的基本构成以及linux的安装（个人觉得如果个人PC上用Ubuntu的话，安装直接按照官方教程原样安装使用即可），然后就是linux的文件目录相关的基本概念，还有就是基本shell命令的使用，一般用的比较多的也就是bash了，bash相关命令记录会汇总到另一个文件里，另外，vim编辑器可能也是要好好讨论的一个内容，所以也会在另一个文件里简单记录一些vim的基础操作。本文就补充一些基本知识，一些基本的常用工具等，以知识点的形式配合记录一些命令的使用。
+$\alpha$
 
 ## Ubuntu系统中的权限
 
@@ -197,11 +198,58 @@ su
 adduser fayer sudo
 ```
 
-## 用户权限下的操作实践
+## 设置局域网固定ip
 
-如果之前一直都是管理员下使用Ubuntu，刚刚转到用户角色，可能会有些不习惯，这里记录一些日常实践。
+在局域网中为了保持服务器ip不变便于链接，设置固定ip。这里主要参考了：[如何在 Ubuntu 18.04 LTS 中配置 IP 地址](https://zhuanlan.zhihu.com/p/51941694)
 
-### 用 mobaxterm 连接 Ubuntu
+查找netplan目录下默认的网络配置文件，文件后缀为.yaml，我的是叫01-network-manager-all.yaml的文件。如果没有可以使用sudo gedit 01-network-manager-all.yaml 自己创建。
+
+```Shell
+cd /etc/netplan
+ls
+```
+
+编辑之前，先查看自己的网卡名称
+
+```Shell
+ifconfig
+```
+
+我的是 enp0s31f6，对应的ip是10.160.11.27
+
+然后编辑网络配置文件 01-network-manager-all.yaml 文件：
+
+```Shell
+sudo vim 01-network-manager-all.yaml
+```
+
+内容如下：
+
+```YAML
+# Let NetworkManager manage all devices on this system
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+     enp0s31f6: #配置的网卡名称,使用ifconfig 查看得到
+       dhcp4: no #dhcp4关闭
+       addresses: [10.160.11.20/16] #设置本机IP及掩码，我的子网掩码255.255.0.0，所以/后面应该是16；在 Ubuntu 18.04 中，定义子网掩码的时候不是像旧版本的那样把 IP 和子网掩码分成两项配置。
+       gateway4: 10.160.0.1 #网关可以通过route -n 命令查询
+       nameservers:
+         addresses: [192.168.202.1] #设置DNS, 输入systemd-resolve --status 命令，最底下能查看得到
+```
+
+特别要注意的是这里的每一行的空格一定要有的，否则会报错误而设置失败！且这个配置文件的每一行都必须靠空格来缩进，不能用 TAB 来代替，否则配置会不起作用。
+
+设置完成后保存退出，然后使用如下命令使ip生效。
+
+```Shell
+sudo netplan apply
+```
+
+现在再使用ifconfig查看ip应该就能看到自己刚刚设置的地址了。
+
+## 用 mobaxterm 连接 Ubuntu
 
 比较方便好用的连接linux服务器的工具推荐：[mobaxterm](https://mobaxterm.mobatek.net/)。
 
@@ -228,12 +276,53 @@ $ python  --version
 安装一个软件，比如anaconda，然后环境配置默认在用户文件夹下，进入配置文件下的环境需要执行下述语句：
 
 ```Shell
-. ~/.bashrc
+$ . ~/.bashrc
 ```
 
 这样，就可以使用配置环境下的相关软件了，比如python,pip等。
 
-### 安装 python IDE 之 PyCharm
+## 管理远程会话
+
+这一节主要参考了[Linux 技巧:使用 Screen 管理你的远程会话](http://www.linuxidc.com/Linux/2013-10/91612.htm)。
+
+远程登陆到服务器运行长时间任务时，如果开了一个远程终端窗口，那么他执行时间太长时，断开连接会将进程杀死，这样就半途而废了。
+
+首先看看为什么关掉窗口/断开连接会使得正在运行的程序死掉。
+
+在Linux/Unix中，有这样几个概念：
+
+进程组（process group）：一个或多个进程的集合，每一个进程组有唯一一个进程组ID，即进程组长进程的ID。
+会话期（session）：一个或多个进程组的集合，有唯一一个会话期首进程（session leader）。会话期ID为首进程的ID。
+会话期可以有一个单独的控制终端（controlling terminal）。与控制终端连接的会话期首进程叫做控制进程（controlling process）。当前与终端交互的进程称为前台进程组。其余进程组称为后台进程组。
+根据POSIX.1定义：
+
+挂断信号（SIGHUP）默认的动作是终止程序。
+当终端接口检测到网络连接断开，将挂断信号发送给控制进程（会话期首进程）。
+如果会话期首进程终止，则该信号发送到该会话期前台进程组。
+一个进程退出导致一个孤儿进程组中产生时，如果任意一个孤儿进程组进程处于STOP状态，发送SIGHUP和SIGCONT信号到该进程组中所有进程。
+因此当网络断开或终端窗口关闭后，控制进程收到SIGHUP信号退出，会导致该会话期内其他进程退出。
+
+为了让程序能在断开连接后仍继续运行，可以使用screen工具，Screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。Screen中有会话的概念，用户可以在一个screen会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telnet/SSH连接窗口那样。在screen中创建一个新的窗口有多种方式：
+
+**直接在命令行键入screen命令**
+
+``` Shell
+screen
+```
+
+Screen将创建一个执行shell的全屏窗口。你可以执行任意shell程序，就像在ssh窗口中那样。在该窗口中键入exit退出该窗口，如果这是该screen会话的唯一窗口，该screen会话退出，否则screen自动切换到前一个窗口。
+
+还可以在screen会话中继续创建新的窗口。在当前screen窗口中键入C-a c，即Ctrl键+a键，之后再按下c键，screen 在该会话内生成一个新的窗口并切换到该窗口。
+
+可以暂时离开screen窗口，先按ctrl+a，然后再按ctrl+d即可。
+
+重新连接会话可以先用screen -ls查看会话的编号，然后使用screen -r xxx（编号）即可回到会话。
+
+更多命令可以参考：https://blog.csdn.net/perry_x/article/details/80459304
+
+## 安装 IDE
+
+### PyCharm for python
 
 安装IDE，还是推荐pycharm，首先可以在本地下载安装包，这里使用这个链接: https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=linux 下载的，然后再使用mobaxterm的upload上传到服务器文件夹中。
 
@@ -317,92 +406,59 @@ export PATH="/opt/miniconda/bin:$PATH"
 
 也可以修改系统级环境文件： /etc/profile ，这里暂时就不用这种方法了。
 
-## 管理远程会话
+### VSCode for C/C++
 
-这一节主要参考了[Linux 技巧:使用 Screen 管理你的远程会话](http://www.linuxidc.com/Linux/2013-10/91612.htm)。
+主要参考 VSCode [GCC on Linux 文档](https://code.visualstudio.com/docs/cpp/config-linux)
 
-远程登陆到服务器运行长时间任务时，如果开了一个远程终端窗口，那么他执行时间太长时，断开连接会将进程杀死，这样就半途而废了。
+去官网下载安装包：https://code.visualstudio.com/Download
 
-首先看看为什么关掉窗口/断开连接会使得正在运行的程序死掉。
-
-在Linux/Unix中，有这样几个概念：
-
-进程组（process group）：一个或多个进程的集合，每一个进程组有唯一一个进程组ID，即进程组长进程的ID。
-会话期（session）：一个或多个进程组的集合，有唯一一个会话期首进程（session leader）。会话期ID为首进程的ID。
-会话期可以有一个单独的控制终端（controlling terminal）。与控制终端连接的会话期首进程叫做控制进程（controlling process）。当前与终端交互的进程称为前台进程组。其余进程组称为后台进程组。
-根据POSIX.1定义：
-
-挂断信号（SIGHUP）默认的动作是终止程序。
-当终端接口检测到网络连接断开，将挂断信号发送给控制进程（会话期首进程）。
-如果会话期首进程终止，则该信号发送到该会话期前台进程组。
-一个进程退出导致一个孤儿进程组中产生时，如果任意一个孤儿进程组进程处于STOP状态，发送SIGHUP和SIGCONT信号到该进程组中所有进程。
-因此当网络断开或终端窗口关闭后，控制进程收到SIGHUP信号退出，会导致该会话期内其他进程退出。
-
-为了让程序能在断开连接后仍继续运行，可以使用screen工具，Screen是一个可以在多个进程之间多路复用一个物理终端的窗口管理器。Screen中有会话的概念，用户可以在一个screen会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telnet/SSH连接窗口那样。在screen中创建一个新的窗口有多种方式：
-
-**直接在命令行键入screen命令**
-
-``` Shell
-$ screen
-```
-
-Screen将创建一个执行shell的全屏窗口。你可以执行任意shell程序，就像在ssh窗口中那样。在该窗口中键入exit退出该窗口，如果这是该screen会话的唯一窗口，该screen会话退出，否则screen自动切换到前一个窗口。
-
-还可以在screen会话中继续创建新的窗口。在当前screen窗口中键入C-a c，即Ctrl键+a键，之后再按下c键，screen 在该会话内生成一个新的窗口并切换到该窗口。
-
-可以暂时离开screen窗口，先按ctrl+a，然后再按ctrl+d即可。
-
-重新连接会话可以先用screen -ls查看会话的编号，然后使用screen -r xxx（编号）即可回到会话。
-
-更多命令可以参考：https://blog.csdn.net/perry_x/article/details/80459304
-
-## 设置局域网固定ip
-
-在局域网中为了保持服务器ip不变便于链接，设置固定ip。这里主要参考了：[如何在 Ubuntu 18.04 LTS 中配置 IP 地址](https://zhuanlan.zhihu.com/p/51941694)
-
-查找netplan目录下默认的网络配置文件，文件后缀为.yaml，我的是叫01-network-manager-all.yaml的文件。如果没有可以使用sudo gedit 01-network-manager-all.yaml 自己创建。
+下载到自己指定的文件夹后（我下载的版本是 code_1.54.3-1615806378_amd64.deb），使用dpkg命令安装即可。安装前最好update一下自己的软件列表（参考：https://blog.csdn.net/qq_40563761/article/details/84107480）
 
 ```Shell
-cd /etc/netplan
-ls
+sudo apt-get update
+sudo dpkg -i code_1.54.3-1615806378_amd64.deb
 ```
-
-编辑之前，先查看自己的网卡名称
+安装完毕之后，使用code即可打开编辑器
 
 ```Shell
-ifconfig
+code
 ```
 
-我的是 enp0s31f6，对应的ip是10.160.11.27
+为了在VSCode中运行C/C++程序，需要安装 C/C++ for Visual Studio Code 插件。
 
-然后编辑网络配置文件 01-network-manager-all.yaml 文件：
+当然首先保证自己的系统中有安装了C编译器gcc以及[调试器gdb](http://www.gdbtutorial.com/tutorial/how-install-gdb)。一般gcc和g++是默认安装的，不过最好使用下面的语句更新安装下
 
 ```Shell
-sudo vim 01-network-manager-all.yaml
+sudo apt-get update
+sudo apt install --reinstall build-essential
+sudo apt-get install gdb
 ```
 
-内容如下：
+这样就准备好在VSCode中运行调试C/C++代码的工具了。
 
-```YAML
-# Let NetworkManager manage all devices on this system
-network:
-  version: 2
-  renderer: NetworkManager
-  ethernets:
-     enp0s31f6: #配置的网卡名称,使用ifconfig 查看得到
-       dhcp4: no #dhcp4关闭
-       addresses: [10.160.11.20/16] #设置本机IP及掩码，我的子网掩码255.255.0.0，所以/后面应该是16；在 Ubuntu 18.04 中，定义子网掩码的时候不是像旧版本的那样把 IP 和子网掩码分成两项配置。
-       gateway4: 10.160.0.1 #网关可以通过route -n 命令查询
-       nameservers:
-         addresses: [192.168.202.1] #设置DNS, 输入systemd-resolve --status 命令，最底下能查看得到
-```
 
-特别要注意的是这里的每一行的空格一定要有的，否则会报错误而设置失败！且这个配置文件的每一行都必须靠空格来缩进，不能用 TAB 来代替，否则配置会不起作用。
+注意C/C++的编译不像python这类解释型语言，直接就能运行，需要比较多的操作，比如多文件一起编译的时候会使用make等工具。根据 https://blog.csdn.net/qq_32648921/article/details/107932642 中的介绍，vscode的多文件编译可以通过多种方式来实现，例如，直接的多文件编译，引入makefile生成多个task进行编译。
 
-设置完成后保存退出，然后使用如下命令使ip生效。
+具体的实现这里参考了：[C++ Tutorial for Beginners #10: Debugging Makefile Project with Visual Studio Code IDE | (Linux GDB)](https://www.youtube.com/watch?v=9VpiGwp8Vos)
+
+vscode下面打开项目文件夹后，如下所示操作，可以看到Run 和 Debug的配置相关项。
+
+![](QQ截图20210325102953.png)
+
+点击“create a launch.json file”，vscode会提示选择编译器，选择"C++(GDB/LLDB)"后 能自动生成一个launch.json文件。
+
+修改"program"后的值，比如我的makefile运行完生成的运行文件是 "program": "${workspaceFolder}/Documents/biliu/4.2.d/vicNl",
+
+主函数需要参数修改 args值："args": ["${workspaceFolder}/Documents/biliu/params/vic/global_param.STEHE"],
+
+然后要提前运行make编译下程序。make常见的命令可以参考[这里](https://blog.csdn.net/ycycyyc_/article/details/107779483)。
+
+如果之前还没有编译过，那么直接执行下面语句即可：
 
 ```Shell
-sudo netplan apply
+sudo make
 ```
 
-现在再使用ifconfig查看ip应该就能看到自己刚刚设置的地址了。
+然后在自己想要调试的行处加上断点（鼠标放在那一行代码的左边会出现一个红点，点击即加上了断点），再点击下图所示的绿色按钮即可调试运行：
+
+![](QQ截图20210325112132.png)
