@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.7
+  - python=3.8
   - jupyterlab
   - earthpy
   - hydrofunctions
@@ -14,3 +14,9 @@ dependencies:
   - sphinx-autobuild
   - sphinx_rtd_theme
   - recommonmark
+  - pip
+  pip:
+    - jax
+    - jaxlib
+    - torch
+    - torchvision
