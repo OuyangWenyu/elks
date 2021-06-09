@@ -3,7 +3,6 @@
 linux是科研常用的操作系统，比如VIC model， WRF model等都是在linux下充分测试的。虽然我们不必像专业的计算机人员那样刨根问底，但是一些简单的常识性只是还是不可少的，这里就日常遇到的知识点做些记录说明。
 
 一般来说，最开始接触linux系统的时候，都会听说过一本书——[《鸟哥的linux私房菜》](http://cn.linux.vbird.org/)，作为环境工程专业出身的鸟哥写的这本书那是非常适合我们这种非计算机专业的初学者的，可能的话还是阅读下比较好，至少了解下计算机的基本构成以及linux的安装（个人觉得如果个人PC上用Ubuntu的话，安装直接按照官方教程原样安装使用即可），然后就是linux的文件目录相关的基本概念，还有就是基本shell命令的使用，一般用的比较多的也就是bash了，bash相关命令记录会汇总到另一个文件里，另外，vim编辑器可能也是要好好讨论的一个内容，所以也会在另一个文件里简单记录一些vim的基础操作。本文就补充一些基本知识，一些基本的常用工具等，以知识点的形式配合记录一些命令的使用。
-$\alpha$
 
 ## Ubuntu系统中的权限
 
@@ -197,6 +196,87 @@ sudo vi /etc/shadow        # 找到原先用户名（所有的名字都要改）
 su
 adduser fayer sudo
 ```
+
+## 挂载新硬盘
+
+主要参考：
+
+- [Ubuntu 挂载新硬盘](https://zhuanlan.zhihu.com/p/35774442)
+- [Ubuntu系统下不同硬盘分区与挂载](https://zhuanlan.zhihu.com/p/125648639)
+- [Ubuntu 16.04添加全新硬盘操作方法](https://blog.csdn.net/stoic163/article/details/79401739)
+
+台式机购买台式机硬盘即可，一般不送SATA线，所以还要再自己买线，SATA线有弯口和直口，买直口的更好插一些，多个硬盘都是弯口的话，不好放置硬盘。
+
+硬盘上插好电源线和数据线（SATA线）即可开始挂载。
+
+首先，为新硬盘分区。
+
+以个人实操为例，插入硬盘后，开机，terminal输入 "sudo fdisk -l" 可以看到 "/dev/sdc"，所以使用 fdisk 对 /dev/sdc 进行分区操作，为了简化操作，只将这个新硬盘全部分为一个分区，具体操作如下：
+
+sudo fdisk /dev/sdc
+
+进入分区工具后，可以输入 m 看指令说明，这里就不按了，主要是以下操作：
+
+- p 命令创建一个主分区
+- 选择默认创建第一个分区
+- 设置分区的开始位置
+- 设置分区的结束位置，因为只设置一个分区，因此都选择默认选项
+- w 命令保存分区设置。
+
+```Shell
+Command (m for help): n
+>> 
+Partition type
+  p primary (0, primary, 0 extended, 4free)
+  e extended (container for logical partitions)
+Select (default p):p
+Partition number (1-4, default 1): 1
+Frist sector (2048-4194303, default 2048): 
+Last sector, *sectors or *size{K,M,G,T,P} (2048-4194303, default 4194303): 
+>> Create a new partition 1 of type 'Linux' and of size xxxx GiB
+Command (m for help):w
+```
+
+接下来格式化分区。我们可以使用 mkfs 命令格式化分区，具体命令如下：
+
+```Shell
+sudo mkfs -t ext4 /dev/sdc1
+```
+
+输入命令后，可以看到分区格式化成功。
+
+接下来挂载分区。分区需要先创建一个目录，然后再把这个新分区挂载到目录上。具体操作如下：
+
+```Shell
+# 我是在 /mnt 目录下创建一个 sdc 的目录，并将新分区挂载到这里
+sudo mkdir /mnt/sdc
+sudo mount /dev/sdc1 /mnt/sdc
+```
+
+挂载后，可以再通过 df 命令查看是否挂载成功：
+
+```Shell
+df -l
+```
+
+最后进行开机自动挂载设置。因为，使用以上方法挂载分区，重启系统之后，分区并不会自动挂载。
+
+编辑系统挂载配置文件/etc/fstab
+
+```Shell
+sudo vim /etc/fstab
+```
+
+按照已有的格式，将新加的硬盘分区信息添加到结尾；
+
+格式为: 设备名称 挂载点 分区类型 挂载选项 dump选项 fsck选项
+
+- dump选项–这一项为0，就表示从不备份。如果上次用dump备份，将显示备份至今的天数。
+- fsck选项 –启动时fsck检查的顺序。为0就表示不检查，（/）分区永远都是1，其它的分区只能从2开始，当数字相同就同时检查（但不能有两1），一般设成2即可。
+
+比如：
+
+![](pictures/20180228161505968.png)
 
 ## 设置局域网固定ip
 

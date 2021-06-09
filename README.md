@@ -61,12 +61,6 @@ cd /mnt/e/Code/elks
 conda env create -f environment.yml
 ```
 
-主要的packages如下：
-
-``` text
-python=3.7, jupyterlab, earthpy, hydrofunctions, seaborn, scikit-learn, sympy, pytorch, torchvision, sphinx, sphinx-autobuild, sphinx_rtd_theme, recommonmark
-```
-
 安装时间较长，需要耐心等待，安装后：
 
 ```Shell

@@ -2,6 +2,8 @@
 
 主要参考[bash-guide](https://github.com/Idnan/bash-guide)。简单汇总记录一些常用的bash命令，方便日常科研使用。关于linux一些基本知识，在本文件夹的其他文件里会有介绍。
 
+另外，强烈推荐一个很好用的工具：[tldr-pages/tldr](https://github.com/tldr-pages/tldr)，使用它可以很好地查询常用的命令。
+
 首先简单介绍下bash，然后记录常用命令。
 
 ## bash简介

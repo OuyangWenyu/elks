@@ -3,20 +3,16 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.8
+  - python
   - jupyterlab
-  - earthpy
-  - hydrofunctions
+  - pymc3
   - seaborn
-  - scikit-learn
   - sympy
-  - sphinx
-  - sphinx-autobuild
-  - sphinx_rtd_theme
-  - recommonmark
+  - tqdm
   - pip
-  pip:
+  - pip:
+    - torch>=1.8.1
+    - torchvision>=0.9.1
+    - torchdiffeq
     - jax
     - jaxlib
-    - torch
-    - torchvision
