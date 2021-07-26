@@ -1,6 +1,7 @@
 name: elks
 channels:
   - conda-forge
+  - pytorch
   - defaults
 dependencies:
   - python
@@ -9,10 +10,8 @@ dependencies:
   - seaborn
   - sympy
   - tqdm
-  - pip
-  - pip:
-    - torch>=1.8.1
-    - torchvision>=0.9.1
-    - torchdiffeq
-    - jax
-    - jaxlib
+  - pytorch==1.8.1
+  - torchvision==0.9.1
+  - torchdiffeq
+  - jax
+  - jaxlib
