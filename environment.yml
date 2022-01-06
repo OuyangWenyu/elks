@@ -6,7 +6,6 @@ channels:
 dependencies:
   - python
   - jupyterlab
-  - pymc3
   - seaborn
   - sympy
   - tqdm
